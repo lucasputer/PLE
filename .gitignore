@@ -232,7 +232,7 @@ TSWLatexianTemp*
 ./auto/*
 *.el
 
-# expex forward references with \gathertag
+# expex forward references with \gathertags
 *-tags.tex
 
 # standalone packages
