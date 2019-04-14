@@ -232,7 +232,7 @@ TSWLatexianTemp*
 ./auto/*
 *.el
 
-# expex forward references with \gathertags
+# expex forward references with \gathertag
 *-tags.tex
 
 # standalone packages
@@ -240,3 +240,14 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+
+# Latex:
+*.aux
+*.log
+*.gz
+*.toc
+*.dvi
+*.ps
+*.nav
+*.snm
+*.pdf

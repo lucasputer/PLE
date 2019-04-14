@@ -1,0 +1,142 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel} 
+\usepackage[margin = 1in]{geometry} 
+\usepackage{caratula}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage[Algoritmo]{algorithm}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks = true, linkcolor = blue]{hyperref}
+\usepackage{comment}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\usepackage{listingsutf8}
+\usepackage{color}
+
+\usepackage{wrapfig}
+\usepackage{nccmath}
+\usepackage[demo]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{inputencoding=utf8/latin1,
+  language=C++,
+  basicstyle=\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  stringstyle=\color{red}\ttfamily,
+  commentstyle=\color{mygreen}\ttfamily,
+  morecomment=[l][\color{magenta}]{\#},
+  % numbers=left,
+  numberstyle=\color{gray},
+  backgroundcolor=\color{backcolour},   
+  keywordstyle=\color{magenta},
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=3,
+  inputencoding=utf8/latin1
+}
+
+% Para que tenga acentos el environment lstlisting
+\lstset{
+     literate=%
+         {á}{{\'a}}1
+         {í}{{\'i}}1
+         {é}{{\'e}}1
+         {ý}{{\'y}}1
+         {ú}{{\'u}}1
+         {ó}{{\'o}}1
+         {ě}{{\v{e}}}1
+         {š}{{\v{s}}}1
+         {č}{{\v{c}}}1
+         {ř}{{\v{r}}}1
+         {ž}{{\v{z}}}1
+         {ď}{{\v{d}}}1
+         {ť}{{\v{t}}}1
+         {ň}{{\v{n}}}1                
+         {ů}{{\r{u}}}1
+         {Á}{{\'A}}1
+         {Í}{{\'I}}1
+         {É}{{\'E}}1
+         {Ý}{{\'Y}}1
+         {Ú}{{\'U}}1
+         {Ó}{{\'O}}1
+         {Ě}{{\v{E}}}1
+         {Š}{{\v{S}}}1
+         {Č}{{\v{C}}}1
+         {Ř}{{\v{R}}}1
+         {Ž}{{\v{Z}}}1
+         {Ď}{{\v{D}}}1
+         {Ť}{{\v{T}}}1
+         {Ň}{{\v{N}}}1                
+         {Ů}{{\r{U}}}1    
+}
+
+\hypersetup{urlcolor=blue}
+
+\makeatletter
+\newenvironment{breakablealgorithm}
+  {% \begin{breakablealgorithm}
+   \begin{center}
+     \refstepcounter{algorithm}% New algorithm
+     \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+     \renewcommand{\caption}[2][\relax]{% Make a new \caption
+       {\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+       \ifx\relax##1\relax % #1 is \relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+       \else % #1 is not \relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+       \fi
+       \kern2pt\hrule\kern2pt
+     }
+  }{% \end{breakablealgorithm}
+     \kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+   \end{center}
+  }
+\makeatother
+
+\newcommand{\bigo}[1]{\ensuremath{\mathcal{O}(#1)}}
+
+\begin{document}
+
+\titulo{Trabajo práctico}
+
+\subtitulo{\textit{Extended Formulations and Branch-and-Cut Algorithms for the Black-and-White Traveling Salesman Problem$^{\cite{main}}$}}
+
+\materia{Seminario Avanzado de Programación Lineal Entera}
+
+\integrante{Bogdanich Espina, Vera}{601/14}{verabogdanichespina@gmail.com}
+\integrante{Puterman Colomber, Lucas}{COMPLETAR}{COMPLETAR}
+
+\maketitle
+
+\newpage
+
+\section{COMPLETAR}
+
+\pagebreak
+
+\begin{thebibliography}{9}
+
+\bibitem{main}
+COMPLETAR: “Extended Formulations and Branch-and-Cut Algorithms for the Black-and-White Traveling Salesman Problem”
+
+\end{thebibliography}
+
+\end{document}
