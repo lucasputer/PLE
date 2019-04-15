@@ -116,7 +116,7 @@
 
 \titulo{Trabajo práctico}
 
-\subtitulo{\textit{Extended Formulations and Branch-and-Cut Algorithms for the Black-and-White Traveling Salesman Problem$^{\cite{main}}$}}
+\subtitulo{\textit{Extended Formulations and Branch-and-Cut Algorithms for the Black-and-White Traveling Salesman Problem}}
 
 \materia{Seminario Avanzado de Programación Lineal Entera}
 
@@ -131,9 +131,9 @@
 
 \section{Introducción}
 
-En este trabajo estudian una variante del problema del viajante de comercio: \textit{el problema del viajante de comercio blanco y negro}, o BWTSP por \textit{black-and-white travelling salesman problem}.
+En este trabajo$^{\cite{main}}$ estudian una variante del problema del viajante de comercio: \textit{el problema del viajante de comercio blanco y negro}, o BWTSP por \textit{black-and-white travelling salesman problem}.
 
-El BWTSP está definido sobre un grafo no dirigido que tiene su conjunto de vértices divido en dos, los blancos W y los negros B. Además, cada arista tiene una distancia y un costo asociado. El objetivo es encontrar el camino de longitud mínima que recorre todos los vértices, y en el que el trayecto entre dos nodos negros consecutivos contiene al menos Q nodos blancos y tiene una distancia de L como máximo. En la figura \ref{fig:ejemplo_0} se puede ver una instancia del problema junto con su solución.
+El BWTSP está definido sobre un grafo no dirigido que tiene su conjunto de vértices divido en dos, los blancos W y los negros B. Además, cada arista tiene una distancia d y un costo c asociado. El objetivo es encontrar el camino de longitud mínima que recorre todos los vértices, y en el que el trayecto entre dos nodos negros consecutivos contiene al menos Q nodos blancos y tiene una distancia de L como máximo. En la figura \ref{fig:ejemplo_0} se puede ver una instancia del problema junto con su solución.
 
 \begin{figure}[H]
     \centering
@@ -142,13 +142,35 @@ El BWTSP está definido sobre un grafo no dirigido que tiene su conjunto de vér
     \label{fig:ejemplo_0}
 \end{figure}
 
-Entre las aplicaciones de este problema están las operaciones aereas de trayectos cortos. En este caso los vértices negros pueden representar estaciones de mantenimiento que los aviones tienen que visitar después de Q + 1 tramos como máximo, o después de haber recorrido una distancia máxima de L.
+Entre las aplicaciones de este problema están las operaciones aéreas de trayectos cortos. En este caso los vértices negros pueden representar estaciones de mantenimiento que los aviones tienen que visitar después de Q + 1 tramos como máximo, o después de haber recorrido una distancia máxima de L.
 
 \section{Modelos}
 
 (Sección para explicar qué es un modelo de PLE y el genérico que está en la introducción del paper)
 
+\[
+\arraycolsep=1pt\def\arraystretch{1.5}
+\begin{array}{cccc}
+	\min & \sum_{e \in E} c_{e} x_{e} & & (1) \\
+	\text { tal que } & \quad x(\delta(i))=2 & \forall i \in V & (2) \\
+	& x(E(S)) \geq 2 & \forall S \subseteq V \backslash\{1\},\ S \neq \emptyset & (3) \\
+	& \left\{e \in E : x_{e}=1\right\} & \text { satisface la restricción de salto para el camino después de cada } k \in B & (4) \\
+	& \left\{e \in E : x_{e}=1\right\} & \text { satisface la restricción de distancia para el camino después de cada } k \in B & (5) \\
+	& \mathbf{x} \in\{0,1\}^{|E|} & & (6) 
+\end{array}
+\]
+
 \section{Modelo de porción del camino}
+
+\[
+\arraycolsep=20pt\def\arraystretch{1.5}
+\begin{array}{ccc}
+	x^{k}\left(\delta^{+}(k)\right)=1 & \forall k \in B & (7) \\
+	\sum_{j \in B \backslash\{k\}} x^{j}\left(\delta^{-}(k)\right)=1 & \forall k \in B & (8) \\
+	x^{k}\left(\delta^{-}(i)\right)=x^{k}\left(\delta^{+}(i)\right) & \forall k \in B,\ \forall i \in W & (9) \\
+	\sum_{k \in B} x_{i j}^{k}+x_{j i}^{k}=x_{e} & \forall e=\{i, j\} \in E & (10)
+\end{array}
+\]
 
 \section{Formulaciones dependientes de la posición}
 
@@ -168,7 +190,7 @@ Entre las aplicaciones de este problema están las operaciones aereas de trayect
 
 (Explicar bien todo el concepto, que podría introducirse también más arriba para entender para qué son los modelos)
 
-\subsection{Preprocesamiento}
+\subsection{Pre-procesamiento}
 
 \subsection{Algoritmo de plano de corte}
 
