@@ -123,7 +123,7 @@
 \materia{Seminario Avanzado de Programación Lineal Entera}
 
 \integrante{Bogdanich Espina, Vera}{601/14}{verabogdanichespina@gmail.com}
-\integrante{Puterman Colomer, Lucas}{COMPLETAR}{lucasputerman@gmail.com}
+\integrante{Puterman Colomer, Lucas}{830/13}{lucasputerman@gmail.com}
 
 \maketitle
 
@@ -135,7 +135,7 @@
 
 En este trabajo$^{\cite{main}}$ estudian una variante del problema del viajante de comercio: \textit{el problema del viajante de comercio blanco y negro}, o BWTSP por \textit{black-and-white travelling salesman problem}.
 
-El BWTSP está definido sobre un grafo no dirigido que tiene su conjunto de vértices divido en dos, los blancos W y los negros B. Además, cada arista tiene una distancia d y un costo c asociado. El objetivo es encontrar el camino de longitud mínima que recorre todos los vértices, y en el que el trayecto entre dos nodos negros consecutivos contiene al menos Q nodos blancos y tiene una distancia de L como máximo. En la figura \ref{fig:ejemplo_0} se puede ver una instancia del problema junto con su solución.
+El BWTSP está definido sobre un grafo no dirigido que tiene su conjunto de vértices divido en dos, los blancos W y los negros B. Además, cada arista tiene una distancia d y un costo c asociado. El objetivo es encontrar el camino de longitud mínima que recorre todos los vértices, y en el que el trayecto entre dos nodos negros consecutivos contiene a lo sumo Q nodos blancos y tiene una distancia de L como máximo. En la figura \ref{fig:ejemplo_0} se puede ver una instancia del problema junto con su solución.
 
 \begin{figure}[H]
     \centering
@@ -146,9 +146,37 @@ El BWTSP está definido sobre un grafo no dirigido que tiene su conjunto de vér
 
 Entre las aplicaciones de este problema están las operaciones aéreas de trayectos cortos. En este caso los vértices negros pueden representar estaciones de mantenimiento que los aviones tienen que visitar después de Q + 1 tramos como máximo, o después de haber recorrido una distancia máxima de L.
 
+
+\section{Branch and Cut}
+Branch and cut es un método de optimización combinatoria para resolver problemas de programación lineal entera, en particular, es el método utilizado en el paper estudiado.\\
+La idea detrás de este método, es usar una combinación del método de \textit{planos de corte} con algoritmos de \textit{branch-and-bound}. Estos métodos, funcionan resolviendo una secuencia de \textit{relajaciones lineales} del problema en enteros, es decir, ignorar temporalmente la restricción de tener variables enteras.\\
+Por ejemplo, en programa entero 0-1, las restricciones tienen la pinta:
+$$x_i \in \{0,1\}$$
+La relajación lineal del problema usa las siguientes restricciones:
+$$0 \leq x_i \leq 1$$
+La técnica de relajación convierte un problema de optimización NP-Hard en un problema relacionado que puede ser resuelto en tiempo polinomial. La solución obtenida con la relajación puede ser usada para ganar información sobre el problema original. 
+\subsection{Planos de corte}
+La idea detrás del método de planos de corte es ir agregando restricciones a un programa lineal hasta que la solución óptima factible tenga valores enteros. Por supuesto, teniendo cuidado con las restricciones que se añaden para que no cambie el problema.\\
+Llamaremos a las resticciones que se añaden, \textit{cortes}. Un corte relativo a una solución fraccional actual, debe satisfacer las siguientes condiciones,
+\begin{itemize}
+  \item Toda solución entera factible debe ser factible con el corte
+  \item La solución fraccionaria actual no debe ser factible con el corte
+\end{itemize}
+
+En la figura \ref{fig:ejemplo_cut} se puede ver un ejemplo gráfico de un corte. El círculo rojo representa la solución óptima fraccionaria encontrada. Los círculos negros son las soluciones enteras y la línea roja representa un corte que cumple con ambos requisitos, acotando nuestro espacio de soluciones factibles.\\
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{ejemplo_cut.png}
+  \caption{La linea roja representa un corte posible en una instancia.}
+  \label{fig:ejemplo_cut}
+\end{figure}
+
+Hay dos formas de generar cortes. La primera, los cortes de Gomory genera cortes para cualquier problema de programación lineal. Esta tiene la venteja de "resolver" cualquier problema, pero la desventaja de que puede ser muy lento. El segundo enfoque, consiste en utilizar la estructura del problema que se quiere resolver para conseguir buenos cortes. De esta forma se pueden conseguir resultados muy buenos pero con la desventaja de tener que hacer un análisis para cada problema por separado.\\
+\subsection{Branch and Bound}
+
+
 \section{Modelos}
 
-(Sección para explicar qué es un modelo de PLE y el genérico que está en la introducción del paper)
 
 \begin{align} 
 	\min & \sum_{e \in E} c_{e} x_{e} & \label{eq:1} \\
@@ -255,10 +283,6 @@ Entre las aplicaciones de este problema están las operaciones aéreas de trayec
 
 \section{Comparaciones teóricas}
 
-\section{Algoritmos de ramificación y corte}
-
-(Explicar bien todo el concepto, que podría introducirse también más arriba para entender para qué son los modelos)
-
 \subsection{Pre-procesamiento}
 
 \subsection{Algoritmo de plano de corte}
@@ -281,7 +305,9 @@ Entre las aplicaciones de este problema están las operaciones aéreas de trayec
 
 \bibitem{main}
 L. Gouveia, M. Leitner y M. Ruthmair, “Extended formulations and branch-and-cut algorithms for the Black-and-White Traveling Salesman Problem". European Journal of Operational Research, 262-3, 908-928. 2017.
-
+G. Cornuéjols, M. Trick y M. Saltzman, "A tutorial on integer programming". CMU Technical Report (1995).
+G. Pataki, "Teaching integer programming formulations using the traveling salesman problem". SIAM Review 45-1 (2003) 116-123.
+John E., Mitchell (2002). "Branch-and-Cut Algorithms for Combinatorial Optimization Problems"
 \end{thebibliography}
 
 \end{document}
