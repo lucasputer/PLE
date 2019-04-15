@@ -24,6 +24,8 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
+\usepackage{mathtools}
+
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -148,39 +150,106 @@ Entre las aplicaciones de este problema están las operaciones aéreas de trayec
 
 (Sección para explicar qué es un modelo de PLE y el genérico que está en la introducción del paper)
 
-\[
-\arraycolsep=1pt\def\arraystretch{1.5}
-\begin{array}{cccc}
-	\min & \sum_{e \in E} c_{e} x_{e} & & (1) \\
-	\text { tal que } & \quad x(\delta(i))=2 & \forall i \in V & (2) \\
-	& x(E(S)) \geq 2 & \forall S \subseteq V \backslash\{1\},\ S \neq \emptyset & (3) \\
-	& \left\{e \in E : x_{e}=1\right\} & \text { satisface la restricción de salto para el camino después de cada } k \in B & (4) \\
-	& \left\{e \in E : x_{e}=1\right\} & \text { satisface la restricción de distancia para el camino después de cada } k \in B & (5) \\
-	& \mathbf{x} \in\{0,1\}^{|E|} & & (6) 
-\end{array}
-\]
+\begin{align} 
+	\min & \sum_{e \in E} c_{e} x_{e} & \label{eq:1} \\
+	\text {tal que} & \quad x(\delta(i))=2 & \forall i \in V \label{eq:2} \\
+	& x(E(S)) \geq 2 & \forall S \subseteq V \backslash\{1\},\ S \neq \emptyset \label{eq:3} \\
+	& \left\{e \in E : x_{e}=1\right\} & \text { satisface la restricción de salto para el camino después de cada } k \in B \label{eq:4} \\
+	& \left\{e \in E : x_{e}=1\right\} & \text { satisface la restricción de distancia para el camino después de cada } k \in B \label{eq:5} \\
+	& \mathbf{x} \in\{0,1\}^{|E|} & \label{eq:6}
+\end{align}
 
 \section{Modelo de porción del camino}
 
-\[
-\arraycolsep=20pt\def\arraystretch{1.5}
-\begin{array}{ccc}
-	x^{k}\left(\delta^{+}(k)\right)=1 & \forall k \in B & (7) \\
-	\sum_{j \in B \backslash\{k\}} x^{j}\left(\delta^{-}(k)\right)=1 & \forall k \in B & (8) \\
-	x^{k}\left(\delta^{-}(i)\right)=x^{k}\left(\delta^{+}(i)\right) & \forall k \in B,\ \forall i \in W & (9) \\
-	\sum_{k \in B} x_{i j}^{k}+x_{j i}^{k}=x_{e} & \forall e=\{i, j\} \in E & (10)
-\end{array}
-\]
+\begin{align} 
+	& x^{k}\left(\delta^{+}(k)\right)=1 & \forall k \in B \label{eq:7} \\
+	& \sum_{j \in B \backslash\{k\}} x^{j}\left(\delta^{-}(k)\right)=1 & \forall k \in B \label{eq:8} \\
+	& x^{k}\left(\delta^{-}(i)\right)=x^{k}\left(\delta^{+}(i)\right) & \forall k \in B,\ \forall i \in W \label{eq:9} \\
+	& \sum_{k \in B} x_{i j}^{k}+x_{j i}^{k}=x_{e} & \forall e=\{i, j\} \in E \label{eq:10}
+\end{align}
+
+\begin{align} 
+	& \sum_{e=\{i, j\} \in E}\left(x_{i j}^{k}+x_{j i}^{k}\right) \leq Q+1 & \forall k \in B \label{eq:11} \\
+	& \sum_{e=\{i, j\} \in E} d_{e}\left(x_{i j}^{k}+x_{j i}^{k}\right) \leq L & \forall k \in B \label{eq:12}
+\end{align}
+
+\begin{align}
+	& x^{k}\left(\delta^{-}(j)\right)+x^{j}\left(\delta^{-}(k)\right) \leq 1 & \forall k \neq j \in B \label{eq:13}
+\end{align}
 
 \section{Formulaciones dependientes de la posición}
 
 \subsection{Formulación pura}
 
+\begin{align}
+	& X^{1}\left(\delta^{+}(k)\right)=1 & \forall k \in B \label{eq:14} \\
+	& \sum_{p=1}^{Q+1} X^{p}\left(\delta^{-}(k)\right)=1 & \forall k \in B \label{eq:15} \\
+	& X^{p}\left(\delta^{-}(i)\right)=X^{p+1}\left(\delta^{+}(i)\right) & \forall i \in W,\ \forall p \in\{1,2, \ldots, Q\} \label{eq:16} \\
+	& \sum_{p=1}^{Q+1}\left(X_{i j}^{p}+X_{j i}^{p}\right)=x_{e} & \forall e=\{i, j\} \in E \label{eq:17}
+\end{align}
+
+\begin{align}
+	& \sum_{e \in P} x_{e} \leq|P|-1 & \forall P \in \mathcal{P}_{\mathrm{inf}} \label{eq:18}
+\end{align}
+
+\begin{align}
+	& X_{i j}^{p} \leq \sum_{h \neq i} X_{j h}^{p+1} & \forall p \in\{1,2, \ldots, Q\},\ \forall e=\{i, j\} \in E, j \in W \label{eq:19} \\
+	& X_{i j}^{p} \leq \sum_{h \neq i} X_{j h}^{1} & \forall p \in\{1,2, \ldots, Q+1\},\ \forall e=\{i, j\} \in E, j \in B \label{eq:20}
+\end{align}
+
+\begin{align}
+	& X\left(\delta^{-}(S)\right) \geq 1 & \forall S \subseteq V_{\mathrm{Q}} \backslash\left\{j_{0} : j \in B\right\}, \exists i \in W |\left\{i_{p}, p \in\{1,2, \ldots, Q\}\right\} \subseteq S \label{eq:21}
+\end{align}
+
 \subsection{Formulación de una porción del camino}
 
 (Modelos traducidos así nomás. Hay que mejorar seguro este)
 
+\begin{align}
+	& Y^{k, 1}\left(\delta^{+}(k)\right)=1 & \forall k \in B \label{eq:22} \\
+	& \sum_{j \in B \backslash\{k\}} \sum_{p=1}^{Q+1} Y^{j, p}\left(\delta^{-}(k)\right)=1 & \forall k \in B \label{eq:23} \\
+	& Y^{k, p}\left(\delta^{-}(i)\right)=Y^{k, p+1}\left(\delta^{+}(i)\right) & \forall k \in B, \forall i \in W, \forall p \in\{1, \ldots, Q\} \label{eq:24} \\
+	& \sum_{k \in B} \sum_{p=1}^{Q+1}\left(Y_{i j}^{k, p}+Y_{j i}^{k, p}\right)=x_{e} & \forall e=\{i, j\} \in E \label{eq:25}
+\end{align}
+
+\begin{align}
+	& \sum_{p=1}^{Q+1} \sum_{e=\{i, j\} \in E} d_{e}\left(Y_{i j}^{k, p}+Y_{j i}^{k, p}\right) \leq L & \forall k \in B \label{eq:26}
+\end{align}
+
+\begin{align}
+	& Y_{i j}^{k, p} \leq \sum_{h \neq i} Y_{j h}^{k, p+1} & \forall k \in B,\ \forall p \in\{1,2, \ldots, Q\}, \forall e=\{i, j\} \in E, j \in W \label{eq:27} \\
+	& Y_{i j}^{k, p} \leq \sum_{h \neq i} Y_{j h}^{j, 1} & \forall k \in B,\ \forall p \in\{1,2, \ldots, Q+1\}, \forall e=\{i, j\} \in E, j \in B \backslash\{k\} \label{eq:28}
+\end{align}
+
+\begin{align}
+	& Y\left(\delta^{-}(S)\right) \geq 1 & \forall S \subseteq V_{\mathrm{QB}} \backslash\{j_{0}^{j} : j \in B\},\ \exists i \in W |\left\{i_{p}^{k}, k \in B, p \in\{1,2, \ldots, Q\}\right\} \subseteq S \label{eq:29}
+\end{align}
+
 \subsection{Modelo 2-dimensional}
+
+\begin{align}
+	& Z^{1,1}\left(\delta^{+}(1)\right)=1 \label{eq:30} \\
+	& \sum_{j \in B \backslash\{1\}} Z^{m, 1}\left(\delta^{+}(j)\right)=1 & \forall m \in\{2,3, \ldots,|B|\} \label{eq:31} \\
+	& \sum_{i \in V \backslash\{1\}} \sum_{p=1}^{Q+1} \sum_{p=1} \sum_{i 1}^{|B|, p}=1 \label{eq:32} \\
+	& \sum_{i \in V} \sum_{p=1}^{Q+1} \sum_{p=1} Z_{i k}^{m, p}=1 & \forall m \in\{2,3, \ldots,|B|\},\ \forall k \in B \backslash\{1\} \label{eq:33} \\
+	& Z^{m, p}\left(\delta^{-}(i)\right)=Z^{m, p+1}\left(\delta^{+}(i)\right) & \forall m \in\{1,2, \ldots,|B|\}, \forall p \in\{1,2, \ldots, Q\},\ \forall i \in W \label{eq:34} \\
+	& \sum_{m=1}^{|B|} \sum_{p=1}^{Q+1}\left(Z_{i j}^{m, p}+Z_{j i}^{m, p}\right)=x_{e} & \forall e=\{i, j\} \in E \label{eq:35}
+\end{align}
+
+\begin{align}
+	& \sum_{p=0}^{Q} \sum_{e=\{i, j\} \in E} d_{e}\left(Z_{i j}^{m, p}+Z_{j i}^{m, p}\right) \leq L \quad \forall m \in\{1,2, \ldots,|B|\} \label{eq:36}
+\end{align}
+
+\begin{align}
+	& Z_{i j}^{m, p} \leq \sum_{h \neq i} Z_{j h}^{m, p+1} & \forall m \in\{1,2, \ldots,|B|\},\ \forall p \in\{1,2, \ldots, Q\},\ \forall e=\{i, j\} \in E, j \in W \label{eq:37} \\
+	& Z_{i j}^{m, p} \leq \sum_{h \neq i} Z_{j h}^{m+1,1} & \forall m \in\{1,2, \ldots,|B|-1\},\ \forall p \in\{1,2, \ldots, Q+1\},\ \forall e=\{i, j\} \in E, j \in B \backslash\{1\} \label{eq:38} \\
+	& Z_{i 1}^{|B|, p} \leq \sum_{h \neq i} Z_{1 h}^{1,1} & \forall p \in\{1,2, \ldots, Q+1\},\ \forall e=\{i, 1\} \in E \label{eq:39}
+\end{align}
+
+\begin{multline}
+	 Z(\delta^{-}(S)) \geq 1 \quad \quad \forall S \subseteq V_{\mathrm{QI}} \backslash\{i_{0}^{m} | i \in B, m \in\{1,2, \ldots,|B|\}, \\
+	 \exists i \in W : \{i_{p}^{m} | p \in \{1,2, \ldots, Q\}, m \in \{1,2, \ldots,|B|\}\} \subseteq S \label{eq:40}
+\end{multline}
 
 \section{Modelos alternativos dependientes del tiempo}
 
