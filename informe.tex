@@ -24,8 +24,6 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
-\usepackage{mathtools}
-
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -157,7 +155,7 @@ $$0 \leq x_i \leq 1$$
 La técnica de relajación convierte un problema de optimización NP-Hard en un problema relacionado que puede ser resuelto en tiempo polinomial. La solución obtenida con la relajación puede ser usada para ganar información sobre el problema original. 
 \subsection{Planos de corte}
 La idea detrás del método de planos de corte es ir agregando restricciones a un programa lineal hasta que la solución óptima factible tenga valores enteros. Por supuesto, teniendo cuidado con las restricciones que se añaden para que no cambie el problema.\\
-Llamaremos a las resticciones que se añaden, \textit{cortes}. Un corte relativo a una solución fraccional actual, debe satisfacer las siguientes condiciones,
+Llamaremos a las restricciones que se añaden, \textit{cortes}. Un corte relativo a una solución fraccional actual, debe satisfacer las siguientes condiciones,
 \begin{itemize}
   \item Toda solución entera factible debe ser factible con el corte
   \item La solución fraccionaria actual no debe ser factible con el corte
@@ -171,7 +169,7 @@ En la figura \ref{fig:ejemplo_cut} se puede ver un ejemplo gráfico de un corte.
   \label{fig:ejemplo_cut}
 \end{figure}
 
-Hay dos formas de generar cortes. La primera, los cortes de Gomory genera cortes para cualquier problema de programación lineal. Esta tiene la venteja de "resolver" cualquier problema, pero la desventaja de que puede ser muy lento. El segundo enfoque, consiste en utilizar la estructura del problema que se quiere resolver para conseguir buenos cortes. De esta forma se pueden conseguir resultados muy buenos pero con la desventaja de tener que hacer un análisis para cada problema por separado.\\
+Hay dos formas de generar cortes. La primera, los cortes de Gomory genera cortes para cualquier problema de programación lineal. Esta tiene la ventaja de "resolver" cualquier problema, pero la desventaja de que puede ser muy lento. El segundo enfoque, consiste en utilizar la estructura del problema que se quiere resolver para conseguir buenos cortes. De esta forma se pueden conseguir resultados muy buenos pero con la desventaja de tener que hacer un análisis para cada problema por separado.\\
 \subsection{Branch and Bound}
 
 
@@ -305,9 +303,16 @@ Hay dos formas de generar cortes. La primera, los cortes de Gomory genera cortes
 
 \bibitem{main}
 L. Gouveia, M. Leitner y M. Ruthmair, “Extended formulations and branch-and-cut algorithms for the Black-and-White Traveling Salesman Problem". European Journal of Operational Research, 262-3, 908-928. 2017.
-G. Cornuéjols, M. Trick y M. Saltzman, "A tutorial on integer programming". CMU Technical Report (1995).
-G. Pataki, "Teaching integer programming formulations using the traveling salesman problem". SIAM Review 45-1 (2003) 116-123.
-John E., Mitchell (2002). "Branch-and-Cut Algorithms for Combinatorial Optimization Problems"
+
+\bibitem{ip_tutorial}
+G. Cornuéjols, M. Trick y M. Saltzman, “A tutorial on integer programming". CMU Technical Report. 1995.
+
+\bibitem{teaching_ip_tsp}
+G. Pataki, “Teaching integer programming formulations using the traveling salesman problem". SIAM Review 45-1, 116-123. 2003.
+
+\bibitem{branch_and_cut}
+J. E. Mitchell, “Branch-and-Cut Algorithms for Combinatorial Optimization Problems". 2002.
+
 \end{thebibliography}
 
 \end{document}
