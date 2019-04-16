@@ -139,72 +139,70 @@
 \subsection{Problema del Viajante de Comercio Blanco y Negro}
 En este trabajo$^{\cite{main}}$ estudian una variante del problema del viajante de comercio: \textit{el problema del viajante de comercio blanco y negro}, o BWTSP por \textit{black-and-white travelling salesman problem}.
 
-El BWTSP está definido sobre un grafo no dirigido $G = (V,E)$ que tiene su conjunto de vértices divido en dos, $V = B \cup W$, los blancos W y los negros B. Además, cada arista $e \in E$ tiene una distancia $d_e \in \mathds{N}$ y un costo $c_e \in \mathds{N}$ asociado. El objetivo es encontrar el camino de longitud mínima que recorre todos los vértices, y en el que el trayecto entre dos nodos negros consecutivos contiene a lo sumo Q nodos blancos y tiene una distancia de L como máximo. En la figura \ref{fig:ejemplo_0} se puede ver una instancia del problema junto con su solución.
+El BWTSP está definido sobre un grafo no dirigido $G = (V,E)$ que tiene su conjunto de vértices divido en dos, $V = B \cup W$, los blancos W y los negros B. Además, cada arista $e \in E$ tiene una distancia $d_e \in \mathds{N}$ y un costo $c_e \in \mathds{N}$ asociado. El objetivo es encontrar el camino de longitud mínima que recorre todos los vértices, y en el que el trayecto entre dos nodos negros consecutivos contiene a lo sumo Q nodos blancos y tiene una distancia de L como máximo. En la figura \ref{fig:ejemplo_bwtsp} se puede ver una instancia del problema junto con su solución.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{ejemplo_0.png}
+    \includegraphics[width=0.4\textwidth]{ejemplo_bwtsp.png}
     \caption{Una instancia con B = \textbraceleft 1, 5, 6\textbraceright, W = \textbraceleft 2, 3, 4, 7\textbraceright, y una solución factible indicada por las aristas gruesas para Q = 2 y L = 3. La solución es óptima, por ejemplo, cuando el costo y la distancia de cada arista es 1 para todas las contenidas en la solución, y 2 para el resto.}
-    \label{fig:ejemplo_0}
+    \label{fig:ejemplo_bwtsp}
 \end{figure}
 
 Entre las aplicaciones de este problema están las operaciones aéreas de trayectos cortos. En este caso los vértices negros pueden representar estaciones de mantenimiento que los aviones tienen que visitar después de Q + 1 tramos como máximo, o después de haber recorrido una distancia máxima de L.
 
-BWTSP es un problema NP-Hard por lo que es atacado mediantes optimización combinatoria para encontrar soluciones exactas.
+BWTSP es un problema NP-Hard por lo que es atacado mediante optimización combinatoria para encontrar soluciones exactas.
 
 \subsection{Conceptos de Programación Lineal Entera}
 
-Un programa entero (PE) es un problema de optimización que tiene la pinta
+Un programa entero (PE) es un problema de optimización que tiene la pinta:
 $$min_{x \in X} c^Tx$$
-donde $X = \mathds{Z}^n \cap \{x \in \mathds{R}^n | Ax \leq b \}$ con alguna matriz $A$ y vector $b$. El poliedro $\{x \in \mathds{R}^n | Ax \leq b \}$ se llama una \textit{formulación} del conjunto $X$.
-Un PE tiene varias formulaciones posibles, por ejemplo, en la figura \ref{fig:ejemplo_formulaciones}, las lineas solidas y punteadas contienen al mismo conjunto de puntos enteros, es decir, los poliedros correspondientes son formulaciones del mismo conjunto.
-Dados dos poliedros $P$ y $Q$, ($P \cap \mathds{Z}^n = Q \cap \mathds{Z}^n$) decimos que $P$ es una formulacion \textit{más fuerte} o \textit{mejor} que $Q$ si $P \subsetneq Q$
+Donde $X = \mathds{Z}^n\ \cap\ \{x \in \mathds{R}^n\ |\ Ax \leq b \}$ con alguna matriz $A$ y vector $b$. El poliedro $\{x \in \mathds{R}^n\ |\ Ax \leq b \}$ se llama una \textit{formulación} del conjunto $X$.
+Un PE tiene varias formulaciones posibles, por ejemplo, en la figura \ref{fig:ejemplo_formulaciones}, las lineas sólidas y punteadas contienen al mismo conjunto de puntos enteros, es decir, los poliedros correspondientes son formulaciones del mismo conjunto.
+Dados dos poliedros $P$ y $Q$, ($P \cap \mathds{Z}^n = Q \cap \mathds{Z}^n$) decimos que $P$ es una formulación \textit{más fuerte} o \textit{mejor} que $Q$ si $P \subsetneq Q$.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{ejemplo_formulaciones.png}
-  \caption{Dos formulaciones del mismo conjunto}
+  \caption{Dos formulaciones del mismo conjunto.}
   \label{fig:ejemplo_formulaciones}
 \end{figure}
 
-
-Llamaremos \textit{región factible} al conjunto de las \textit{soluciones factibles}, es decir, el conjunto de todos los posibles puntos (conjuntos de variables) que satisfacen las restricciones del problema.
-A su vez, llamaremos \textit{función objetivo} a la  función $f(x)$ de variables $(x_1,\dots,x_n)$ sobre una región factible $X$
+Llamaremos \textit{región factible} al conjunto de las \textit{soluciones factibles}, es decir, el conjunto de todos los posibles puntos (conjuntos de variables) que satisfacen las restricciones del problema. A su vez, llamaremos \textit{función objetivo} a la función $f(x)$ de variables $(x_1,\dots,x_n)$ sobre una región factible $X$. Luego, lo que buscamos es:
 $$min_{x \in X} f(x)$$
 
-En la práctica, mejores formulaciones del mismo problema usualmente pueden ser resueltas en tiempos mejores. Para eso se formulan distintos modelos del problema donde se añaden distintas \textit{restricciones} al espacio de soluciones. 
-Este paper se basa en comparar distintas formulaciones de BWTSP.
+En la práctica, formulaciones mejores del mismo problema usualmente pueden ser resueltas en tiempos menores. Para eso se buscan modelos nuevos del problema donde se añaden distintas \textit{restricciones} al espacio de soluciones. Este trabajo se basa en comparar distintas formulaciones de BWTSP.
 
-Veamos como se aplica esto al BWTSP. Como veremos en detalle en la sección Modelos, las distintas formulaciones en el paper parten de un modelo genérico basado en variables de decisión $x_e \in \{0,1\}, \forall e \in E$ que indican si un eje es incluido en el ciclo.
-Basicamente, la funcion que buscaremos minimizar es la siguiente:
+Veamos como se aplica esto al BWTSP. Como veremos en detalle en la sección \ref{sec:modelo_base}, las distintas formulaciones del trabajo parten de un modelo basado en las variables de decisión $x_e \in \{0,1\}, \forall e \in E$ que indican si un arco se incluye en el ciclo. Básicamente, la función que buscaremos minimizar es la siguiente:
 $$\min \sum_{e \in E} c_{e} x_{e}$$
-Esto representa el conjunto de ejes de costo mínimo. Por su puesto que esto no es suficiente, ya que ademas debemos añadir las restricciones propias del BWTSP para indicar nuestro espacio de soluciones factibles, y estas son:
+Esto representa el conjunto de arcos de costo mínimo. Por supuesto que esto no es suficiente, ya que además debemos añadir las restricciones propias del BWTSP para indicar nuestro espacio de soluciones factibles, y estas son:
 \begin{itemize}
-  \item Los vértices seleccionados deben formar un ciclo hamiltoniano
-  \item Entre dos vértices negros visitados debe haber a lo sumo $Q$ vértices blancos (restricción de salto)
-  \item El ciclo tiene una distancia $L$ como máximo (restricción de distancia)
+  \item Los vértices seleccionados deben formar un ciclo hamiltoniano.
+  \item Entre dos vértices negros visitados debe haber a lo sumo $Q$ vértices blancos (restricción de salto).
+  \item El ciclo tiene una distancia $L$ como máximo (restricción de distancia).
 \end{itemize} 
 
 \subsubsection{Relajaciones Lineales}
-Como fue mencionado previamente,  $BWTSP$ pertenece a NP-Hard, por lo que no es posible atacarlo directamente, es por esto que se utilizan en la práctica, distintos métodos que hacen uso de \textit{relajaciones lineales}.
-La técnica de relajación linear en un problema de programación lineal entera consiste en ignorar temporalmente la restricción de tener variables enteras.
-Por ejemplo, en programa entero 0-1, las restricciones tienen la pinta:
+Como fue mencionado previamente, $BWTSP$ pertenece a NP-Hard, por lo que no es posible atacarlo directamente, es por esto que se utilizan en la práctica, distintos métodos que hacen uso de \textit{relajaciones lineales}.
+
+La técnica de relajación linear en un problema de programación lineal entera consiste en ignorar temporalmente la restricción de tener variables enteras. Por ejemplo, en programa entero 0-1, las restricciones tienen la pinta:
 $$x_i \in \{0,1\}$$
-La relajación lineal del problema usa las siguientes restricciones:
+Mientras que la relajación lineal del problema usa las siguientes restricciones:
 $$0 \leq x_i \leq 1$$
 La técnica de relajación convierte un problema de optimización NP-Hard en un problema relacionado que puede ser resuelto en tiempo polinomial. La solución obtenida con la relajación puede ser usada para ganar información sobre el problema original. 
 
 
 \subsubsection{Branch and Cut}
-Branch and cut es un método de optimización combinatoria para resolver problemas de programación lineal entera, en particular, es el método utilizado en el paper estudiado.
-La idea detrás de este método, es usar una combinación del método de \textit{planos de corte} con algoritmos de \textit{branch-and-bound}. Estos métodos, funcionan resolviendo una secuencia de \textit{relajaciones lineales} del problema en enteros.
+Branch and cut, o ramificación y corte, es un método de optimización combinatoria para resolver problemas de programación lineal entera, en particular, es el método utilizado en el trabajo estudiado.
+
+La idea detrás de este método, es usar una combinación del método de \textit{planos de corte} con algoritmos de \textit{branch and bound}. Estos métodos, funcionan resolviendo una secuencia de \textit{relajaciones lineales} del problema en enteros.
 
 \subsubsection{Planos de corte}
 La idea detrás del método de planos de corte es ir agregando restricciones a un programa lineal hasta que la solución óptima factible tenga valores enteros. Por supuesto, teniendo cuidado con las restricciones que se añaden para que no cambie el problema.
-Llamaremos a las restricciones que se añaden, \textit{cortes}. Un corte relativo a una solución fraccional actual, debe satisfacer las siguientes condiciones,
+
+Llamaremos a las restricciones que se añaden, \textit{cortes}. Un corte relativo a una solución fraccional actual, debe satisfacer las siguientes condiciones:
 \begin{itemize}
-  \item Toda solución entera factible debe ser factible con el corte
-  \item La solución fraccionaria actual no debe ser factible con el corte
+  \item Toda solución entera factible debe ser factible con el corte.
+  \item La solución fraccionaria actual no debe ser factible con el corte.
 \end{itemize}
 
 En la figura \ref{fig:ejemplo_cut} se puede ver un ejemplo gráfico de un corte. El círculo rojo representa la solución óptima fraccionaria encontrada. Los círculos negros son las soluciones enteras y la línea roja representa un corte que cumple con ambos requisitos, acotando nuestro espacio de soluciones factibles.
@@ -215,50 +213,54 @@ En la figura \ref{fig:ejemplo_cut} se puede ver un ejemplo gráfico de un corte.
   \label{fig:ejemplo_cut}
 \end{figure}
 
-Hay dos formas de generar cortes. La primera, los cortes de Gomory genera cortes para cualquier problema de programación lineal. Esta tiene la ventaja de "resolver" cualquier problema, pero la desventaja de que puede ser muy lento. El segundo enfoque, consiste en utilizar la estructura del problema que se quiere resolver para conseguir buenos cortes. De esta forma se pueden conseguir resultados muy buenos pero con la desventaja de tener que hacer un análisis para cada problema por separado.\\
+Hay dos formas de generar cortes. La primera, los cortes de Gomory, genera cortes para cualquier problema de programación lineal. Esta tiene la ventaja de “resolver"\ cualquier problema, pero la desventaja de que puede ser muy lento. El segundo enfoque, consiste en utilizar la estructura del problema que se quiere resolver para conseguir buenos cortes. De esta forma se pueden conseguir resultados muy buenos pero con la desventaja de tener que hacer un análisis para cada problema por separado.
 
 \subsubsection{Branch and Bound}
-El método Branch \& Bound (B\&B) es una de las principales herramientas en la construcción de soluciones exactas para problemas de optimización.
+El método Branch and Bound (B\&B) es una de las principales herramientas en la construcción de soluciones exactas para problemas de optimización.
 Un algoritmo B\&B busca la solución en el espacio de soluciones completo de un problema.
 Sin embargo, hacer una enumeración explicita de las soluciones es imposible debido a que el número de posibles soluciones es exponencialmente creciente.
-El uso de cotas combinadas con el valor de la mejor solución actual, permite al algoritmo buscar partes de la solución implicitamente.
+El uso de cotas combinadas con el valor de la mejor solución actual, permite al algoritmo buscar partes de la solución implícitamente.
 En cualquier punto durante el algoritmo, el estado de la solución con respecto a la búsqueda del espacio de soluciones es descripto por una serie de subconjuntos inexplorados del espacio de soluciones junto con la mejor solución encontrada hasta el momento.
-Inicialmente, solo un subconjunto existe (el espacio de solución completo) y la mejor solución hayada es $\infty$. 
-Los subespacios no explorados se representan como nodos en un árbol de búsqueda generado dinámicamente, que inicialmente solo contiene la raiz. 
-En cada paso de una iteración de B\&B se procesa un nodo es procesado.
+Inicialmente, solo un subconjunto existe (el espacio de solución completo) y la mejor solución hallada es $\infty$. 
+Los subespacios no explorados se representan como nodos en un árbol de búsqueda generado dinámicamente, que inicialmente solo contiene la raíz. 
+En cada paso de una iteración de B\&B se procesa un nodo.
 
-Un algoritmo de B\&B opera bajo dos principios principales:
+Un algoritmo de B\&B se puede dividir en dos partes:
+
 \begin{itemize}
-  \item Ramificación (Branching): Dividir recursivamente el espacio de búsqueda actual y minimizar la función objetivo en los espacios resultantes.
-  \item Acotación (Bounding): Como la ramificación en si misma implicaria una enumeración completa del espacio de búsqueda, se descartan ramas basadas en cotas de soluciones actuales del algoritmo.
+  \item Ramificación (branching): Dividir recursivamente el espacio de búsqueda actual y minimizar la función objetivo en los espacios resultantes.
+  \item Acotación (bounding): Como la ramificación en si misma implicaría una enumeración completa del espacio de búsqueda, se descartan ramas basadas en cotas de soluciones actuales del algoritmo.
 \end{itemize}
- Una iteración consta de tres compenentes principales:
- \begin{itemize}
-  \item Selección de nodo a procesar.
-  \item Calculo de cotas (bound)
-  \item Ramificación (branching)
- \end{itemize}
 
- En la figura \ref{fig:ejemplo_bandb} la situación inicial y el primer paso de un proceso de B\&B es ilustrado. Notar que los nodos $S1$ y $S4$ se cierran ya que dada la solución actual de ese momento ya se sabe que el resultado óptimo no se entcontrará en esos espacios.
+Cada iteración consta de tres componentes principales:
+ 
+\begin{itemize}
+  \item Selección del nodo a procesar.
+  \item Calculo de cotas (bound).
+  \item Ramificación (branching).
+\end{itemize}
 
- El orden en que los componentes de la iteración son ejecutados puede variar según la estrategia utilizada para seleccionar el siguiente nodo a procesar.
- Si la selección del siguiente subproblema está basada en el valor de la cota de los subproblemas, entonces la primera operación en una iteración luego de elegir un nodo es ramificar.
- Por ejemplo, en una subdivisión del espacio de solución de un nodo en dos o mas subespacios a ser investigados en iteraciónes posteriores.
- Para cada uno de estos, se revisa si el subespacio consiste de una sola solución en cuyo caso se compara con la mejor solución actual y se guarda la mejor.
- Si se puede establecer que el subespacio no contiene la solución óptima, se descarta. En caso contrario, se guarda con los nodos a revisar junto con su cota.
+En la figura \ref{fig:ejemplo_bandb} la situación inicial y el primer paso de un proceso de B\&B es ilustrado. Notar que los nodos $S1$ y $S4$ se cierran ya que dada la solución actual de ese momento ya se sabe que el resultado óptimo no se entcontrará en esos espacios.
+
+El orden en que los componentes de la iteración son ejecutados puede variar según la estrategia utilizada para seleccionar el siguiente nodo a procesar.
+Si la selección del siguiente subproblema está basada en el valor de la cota de los subproblemas, entonces la primera operación en una iteración luego de elegir un nodo es ramificar.
+Por ejemplo, en una subdivisión del espacio de solución de un nodo en dos o mas subespacios a ser investigados en iteraciones posteriores.
+Para cada uno de estos, se revisa si el subespacio consiste de una sola solución en cuyo caso se compara con la mejor solución actual y se guarda la mejor.
+Si se puede establecer que el subespacio no contiene la solución óptima, se descarta. En caso contrario, se guarda con los nodos a revisar junto con su cota.
  
- 
- \begin{figure}[H]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.7\textwidth]{ejemplo_bandb.png}
-  \caption{Ilustración del espacio de búsqueda de Branch and Bound}
+  \caption{Ilustración del espacio de búsqueda de Branch and Bound.}
   \label{fig:ejemplo_bandb}
 \end{figure}
 
-\section{Modelo Genérico}
+\section{Modelo base}
+\label{sec:modelo_base}
 
-En la sección anterior, se vió una introducción a las herramientas utliziadas en este trabajo y se formuló coloquialmente las restricciones necesarias para modelar BWTSP. Veamos ahora una formulación genérica que servirá de base para los distintos modelos a introducirse en las secciones a venir.
-Tomamos variables de decisión $x_e \in \{0,1\}, \forall e \in E$ que indican si un eje es incluido en el ciclo.
+En la sección anterior, se vio una introducción a las herramientas utilizadas en este trabajo y se formularon coloquialmente las restricciones necesarias para modelar BWTSP. Veamos ahora una formulación genérica que servirá de base para los distintos modelos a introducirse en las secciones a venir.
+
+Las variables de decisión $x_e \in \{0,1\}, \forall e \in E$ indican si un arco es incluido en el ciclo.
 \begin{align} 
 	\min & \sum_{e \in E} c_{e} x_{e} & \label{eq:1} \\
 	\text {tal que} & \quad x(\delta(i))=2 & \forall i \in V \label{eq:2} \\
@@ -268,14 +270,18 @@ Tomamos variables de decisión $x_e \in \{0,1\}, \forall e \in E$ que indican si
 	& \mathbf{x} \in\{0,1\}^{|E|} & \label{eq:6}
 \end{align}
 
-Existen distintas formas de modelar ciclos hamiltonianos. En el trabajo estudiado se usan restricciones en el grado de los vértices (2) y el conjunto exponencial de restricciones de corte (3). Se introduce la notación necesaria en el próximo parrafo.
+Existen distintas formas de modelar ciclos hamiltonianos. En el trabajo estudiado se usan restricciones en el grado de los vértices \ref{eq:2} y el conjunto exponencial de restricciones de corte \ref{eq:3}. Se introduce la notación necesaria al final de esta sección.
 
-Las restricciones (4) y (5) son modeladas de maneras distintas en las distintas formulaciones que serán vistas.
+Las restricciones \ref{eq:4} y \ref{eq:5} son modeladas de maneras distintas en las distintas formulaciones que serán vistas.
 
-\textbf{Notación} $A = \{(i,j) | \{i,j\} \in E\}$ obtenida de bidirijir el conjunto de aristas $E$. 
-Para un subconjunto de vértices $S \subset V$, usaremos la notación $\delta(s) = \{\{i,j\} \in E | i \in S, j \notin S\}$,
-$\delta^+(s) = \{\{i,j\} \in A | i \in S, j \notin S\}$ y $\delta^-(s) = \{\{i,j\} \in A | i \notin S, j \in S\}$.
-Para un conjunto de variables $\textbf{z}$ definidas en un conjunto $W$ y un subconjunto $W' \subseteq W$, se usará la notación $z(W') = \sum_{u \in W'} z_u$
+Por último, introducimos notación que se usó en las ecuaciones de este modelo, y/o que se va incluir en las próximas:
+
+\begin{itemize}
+	\item $A = \{(i,j)\ |\ \{i,j\} \in E\}$ obtenido al bidirijir el conjunto de aristas $E$.
+	\item Para un subconjunto de vértices $S \subset V$, usaremos la notación $\delta(s) = \{\{i,j\} \in E\ |\ i \in S,\ j \notin S\}$,
+$\delta^+(s) = \{\{i,j\} \in A\ |\ i \in S,\ j \notin S\}$ y $\delta^-(s) = \{\{i,j\} \in A\ |\ i \notin S,\ j \in S\}$.
+	\item Para un conjunto de variables $\textbf{z}$ definidas en un conjunto $W$ y un subconjunto $W' \subseteq W$, se usará la notación $z(W') = \sum_{u \in W'} z_u$.
+\end{itemize}
 
 \section{Modelo de porción del camino}
 
@@ -297,7 +303,7 @@ La ecuación \ref{eq:7} asegura que desde cada nodo negro sale una sola arista y
 
 Llamamos PS, por \textit{path segment}, a la formulación resultante de reemplazar las restricciones abstractas \ref{eq:4} y \ref{eq:5} por \ref{eq:7}–\ref{eq:12} y las correspondientes a la definición de $x_{i j}^{k}$.
 
-En el trabajo original también se incluye la restricción \ref{eq:13} que relaciona los trayectos asociados a cada nodo negro:
+En el trabajo original también se incluye la restricción \ref{eq:13} que relaciona los trayectos asociados a cada nodo negro, asumiendo que $|B| \geq 3$:
 
 \begin{align}
 	& x^{k}\left(\delta^{-}(j)\right)+x^{j}\left(\delta^{-}(k)\right) \leq 1 & \forall k \neq j \in B \label{eq:13}
