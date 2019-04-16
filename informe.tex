@@ -249,6 +249,8 @@ Inicialmente, solo un subconjunto existe (el espacio de solución completo) y la
 
 \section{Modelo de porción del camino}
 
+Hasta ahora solamente habíamos comentado un modelo base teórico, con restricciones abstractas que en la práctica deberían reemplazarse. En esta sección introducimos una formulación que se basa en la descripción del problema para determinar las restricciones abstractas. La idea de este modelo es identificar el camino desde un nodo $k \in B$ hasta el nodo negro siguiente sin indicar explícitamente cuál es. A este trayecto nos vamos a referir como “el camino asociado con el nodo $k$". Las variables $x_{i j}^{k} \in\{0,1\},\ \forall k \in B,\ \forall(i, j) \in A$ indican que la arista $(i,j)$ está contenida en la porción del camino general asociada al vértice negro $k$. Con estas variables podemos modelar la porción del camino asociada a cada nodo negro en las restricciones \ref{eq:7}–\ref{eq:10}, al igual que modelar las restricciones de salto y distancia, \ref{eq:4} y \ref{eq:5} respectivamente. A lo largo de este trabajo vamos a explicar en detalle las ecuaciones después de introducirlas.
+
 \begin{align} 
 	& x^{k}\left(\delta^{+}(k)\right)=1 & \forall k \in B \label{eq:7} \\
 	& \sum_{j \in B \backslash\{k\}} x^{j}\left(\delta^{-}(k)\right)=1 & \forall k \in B \label{eq:8} \\
@@ -256,14 +258,22 @@ Inicialmente, solo un subconjunto existe (el espacio de solución completo) y la
 	& \sum_{k \in B} x_{i j}^{k}+x_{j i}^{k}=x_{e} & \forall e=\{i, j\} \in E \label{eq:10}
 \end{align}
 
+La ecuación \ref{eq:7} asegura que desde cada nodo negro sale una sola arista y que es parte de su porción del camino. Mientras que la ecuación \ref{eq:8} garantiza que hacia cada nodo de $B$ llega una sola arista, y es parte de la porción del camino de un único nodo negro. Las restricciones de \ref{eq:9} indican que si la arista que llega a un nodo blanco pertenece al camino del nodo negro $k$ entonces la arista que sale de él también, y si no pertenece la que llega entonces la que parte tampoco. Por último, las restricciones \ref{eq:10} unen los dos conjuntos de variables: $x_{e}$ y $x_{i j}^{k}$, expresando que $(i,j)$ o $(j,i)$ son parte de la porción de algún $k$ sí y sólo sí la arista $e$ pertenece al camino final. Para que la formulación sea válida también hay que incluir las restricciones de salto y distancia, \ref{eq:11} y \ref{eq:12} en este caso.
+
 \begin{align} 
 	& \sum_{e=\{i, j\} \in E}\left(x_{i j}^{k}+x_{j i}^{k}\right) \leq Q+1 & \forall k \in B \label{eq:11} \\
 	& \sum_{e=\{i, j\} \in E} d_{e}\left(x_{i j}^{k}+x_{j i}^{k}\right) \leq L & \forall k \in B \label{eq:12}
 \end{align}
 
+Llamamos PS, por \textit{path segment}, a la formulación resultante de reemplazar las restricciones abstractas \ref{eq:4} y \ref{eq:5} por \ref{eq:7}–\ref{eq:12} y las correspondientes a la definición de $x_{i j}^{k}$.
+
+En el trabajo original también se incluye la restricción \ref{eq:13} que relaciona los trayectos asociados a cada nodo negro:
+
 \begin{align}
 	& x^{k}\left(\delta^{-}(j)\right)+x^{j}\left(\delta^{-}(k)\right) \leq 1 & \forall k \neq j \in B \label{eq:13}
 \end{align}
+
+Esta restricción elimina ciclos al asegurar que si un nodo negro $j$ es el nodo negro inmediatamente siguiente a $k$ de $B$, entonces $k$ no puede estar inmediatamente después de $j$. Los resultados computacionales, que se introducen dentro de algunas secciones, muestran que estas desigualdades mejoran las cotas de PS para algunas instancias evaluadas, y a la variante del modelo que incluye \ref{eq:13} se la llama PS+.
 
 \section{Formulaciones dependientes de la posición}
 
@@ -376,7 +386,7 @@ G. Pataki, “Teaching integer programming formulations using the traveling sale
 J. E. Mitchell, “Branch-and-Cut Algorithms for Combinatorial Optimization Problems". 2002.
 
 \bibitem{branc_and_bound}
-Clausen, Jens, Branch and Bound Algorithms—Principles and Examples. 1999.
+J. Clausen, “Branch and Bound Algorithms—Principles and Examples". 1999.
 
 \end{thebibliography}
 
