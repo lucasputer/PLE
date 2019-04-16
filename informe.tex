@@ -158,7 +158,7 @@ Un programa entero (PE) es un problema de optimización que tiene la pinta
 $$min_{x \in X} c^Tx$$
 donde $X = \mathds{Z}^n \cap \{x \in \mathds{R}^n | Ax \leq b \}$ con alguna matriz $A$ y vector $b$. El poliedro $\{x \in \mathds{R}^n | Ax \leq b \}$ se llama una \textit{formulación} del conjunto $X$.
 Un PE tiene varias formulaciones posibles, por ejemplo, en la figura \ref{fig:ejemplo_formulaciones}, las lineas solidas y punteadas contienen al mismo conjunto de puntos enteros, es decir, los poliedros correspondientes son formulaciones del mismo conjunto.
-Dados dos poliedros $P$ y $Q$, ($P /cap \mathds{Z}^n = Q \cap \mathds{Z}^n$) decimos que $P$ es una formulacion \textit{más fuerte} o \textit{mejor} que $Q$ si $P \subsetneq Q$
+Dados dos poliedros $P$ y $Q$, ($P \cap \mathds{Z}^n = Q \cap \mathds{Z}^n$) decimos que $P$ es una formulacion \textit{más fuerte} o \textit{mejor} que $Q$ si $P \subsetneq Q$
 
 \begin{figure}[H]
   \centering
@@ -250,7 +250,7 @@ Un algoritmo de B\&B opera bajo dos principios principales:
  
  \begin{figure}[H]
   \centering
-  \includegraphics[width=1.0\textwidth]{ejemplo_bandb.png}
+  \includegraphics[width=0.7\textwidth]{ejemplo_bandb.png}
   \caption{Ilustración del espacio de búsqueda de Branch and Bound}
   \label{fig:ejemplo_bandb}
 \end{figure}
