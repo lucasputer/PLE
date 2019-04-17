@@ -283,7 +283,7 @@ $\delta^+(s) = \{\{i,j\} \in A\ |\ i \in S,\ j \notin S\}$ y $\delta^-(s) = \{\{
 	\item Para un conjunto de variables $\textbf{z}$ definidas en un conjunto $W$ y un subconjunto $W' \subseteq W$, se usará la notación $z(W') = \sum_{u \in W'} z_u$.
 \end{itemize}
 
-\section{Modelo de segmento de camino}
+\section{Modelo de segmento del camino}
 
 Hasta ahora solamente habíamos comentado un modelo base teórico, con restricciones abstractas que en la práctica deberían reemplazarse. En esta sección introducimos una formulación que se basa en la descripción del problema para determinar las restricciones abstractas. La idea de este modelo es identificar el camino desde un nodo $k \in B$ hasta el nodo negro siguiente sin indicar explícitamente cuál es. A este trayecto nos vamos a referir como “el camino asociado con el nodo $k$". Las variables $x_{i j}^{k} \in\{0,1\},\ \forall k \in B,\ \forall(i, j) \in A$ indican que la arista $(i,j)$ está contenida en el segmento del camino general asociada al vértice negro $k$. Con estas variables podemos modelar el segmento del camino asociada a cada nodo negro en las restricciones \ref{eq:7}–\ref{eq:10}, al igual que modelar las restricciones de salto y distancia, \ref{eq:4} y \ref{eq:5} respectivamente. A lo largo de este trabajo vamos a explicar en detalle las ecuaciones después de introducirlas.
 
@@ -366,7 +366,7 @@ Un conjunto polinomial de desigualdades que usualmente mejoran las cotas de las 
 \end{align}
 
 Estas simplemente dicen que si una arista $(i,j)$ está en la posición $p+1$ en un segmento dado, entonces la arista previa en la posición $p$ convergente al vértice $i$, no puede diverger del vértice $j$.
-Llamamos a la variante de PD con las restricciones \ref{eq:19} y \ref{eq:20},  PD$^+$
+Llamamos a la variante de PD con las restricciones \ref{eq:19} y \ref{eq:20},  PD$^+$.
 
 Como se introdujo previamente en esta sección, las formulaciones dependientes de la posición pueden ser vistas como formulaciones en un grafo en capas. Ahora, definimos el digrafo en capas $G_Q = (V_Q,A_Q)$ asociado a la formulación PD.
 El conjunto de vértices $V_Q = \{i_0 | i \in B\} \cup \{i_p | i \in W,\ 1 \leq p \leq Q\}$ consiste de vértices negros en la capa cero (ya que la cuenta de saltos de cada segmento del camino se inicializa por un vértice negro con 0) y copias de los vértices blancos en todas las capas factibles $p, 1 \leq p \leq Q$. Un vértice $i_p$ incluido en una solución, indica que el único camino de $i$ al vértice negro que inicia su segmento, tiene longitud $p$.
@@ -382,13 +382,13 @@ El conjunto de aristas $A_Q$ consiste de:
 Formalmente: $A_Q = \{(i_p,j_{p+1})\ |\ i_p,j_{p+1} \in V_Q,\ (i,j) \in A\} \cup \{(i_0,j_0)\ |\ i,j \in B, (i,j) \in A\} \cup \{(i_p,j_0)\ |\ i \in W,\ j \in B,\ i_p \in V_Q (i,j) \in A\}$.
 
 La interpretación de PD en el grafo $G_Q$ está basada en asociar cada una de las variables definidas previamente $X_{ij}^p$ ya se con la arista $(i_{p-1},j_p)$ si $j \in W$, o bien la arista $(i_{p-1},j_0)$ si $j \in B$.
-La figura en \ref{fig:ejemplo_capas} muestra la solución de la figura \ref{fig:ejemplo_bwtsp} en el contexto del digrafo $G_Q$.
+La figura en \ref{fig:ejemplo_capas_q} muestra la solución de la figura \ref{fig:ejemplo_bwtsp} en el contexto del digrafo $G_Q$.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{ejemplo_capas.png}
+  \includegraphics[width=0.7\textwidth]{ejemplo_capas_q.png}
   \caption{Digrafo en capas $G_Q = (V_Q,A_Q)$ correspondiente a la instancia dada en la figura \ref{fig:ejemplo_bwtsp}. Las aristas en negrita representan a la solución dada en esa figura.}
-  \label{fig:ejemplo_capas}
+  \label{fig:ejemplo_capas_q}
 \end{figure}
 
 Hay varias desigualdades validas que mejoran significativamente las cotas de LP del modelo dependiente del tiempo y que son más fáciles de describir en términos del digrafo $G_Q$.
@@ -400,11 +400,13 @@ El trabajo estudiado considera al conjunto de desigualdades \ref{eq:21} que aseg
 	& X\left(\delta^{-}(S)\right) \geq 1 & \forall S \subseteq V_{\mathrm{Q}} \backslash\left\{j_{0} : j \in B\right\}, \exists i \in W |\left\{i_{p}, p \in\{1,2, \ldots, Q\}\right\} \subseteq S \label{eq:21}
 \end{align}
 
-La variante de PD$^+$ que agrega estas últimas restricciones va a ser llamada PD$^{++}$
+La variante de PD$^+$ que agrega estas últimas restricciones va a ser llamada PD$^{++}$.
 
-\subsection{Formulación de un segemento del camino}
+\subsection{Reformulación del modelo de segmento del camino}
 
-(Modelos traducidos así nomás. Hay que mejorar seguro este)
+Se pueden incorporar las ideas del modelo dependiente de la posición anterior al modelo de segmento del camino. Las variables $Y_{i j}^{k, p} \in\{0,1\},\ \forall k \in B,\ \forall p \in\{1, \ldots, Q+1\},\ \forall(i, j) \in A$ van a indicar que el arco $(i,j)$ está en la posición $p$ del recorrido que empieza en el nodo $k$.
+
+El modelo nuevo está compuesto por las restricciones iniciales, \ref{eq:22}-\ref{eq:25} para reemplazar a \ref{eq:7}-\ref{eq:10} que modelan los segmentos de camino, \ref{eq:14}-\ref{eq:17} del modelo anterior, y restricciones de distancia y salto que reemplazarían a las abstractas. Nos vamos a referir a esta formulación como PDPS.
 
 \begin{align}
 	& Y^{k, 1}\left(\delta^{+}(k)\right)=1 & \forall k \in B \label{eq:22} \\
@@ -413,17 +415,36 @@ La variante de PD$^+$ que agrega estas últimas restricciones va a ser llamada P
 	& \sum_{k \in B} \sum_{p=1}^{Q+1}\left(Y_{i j}^{k, p}+Y_{j i}^{k, p}\right)=x_{e} & \forall e=\{i, j\} \in E \label{eq:25}
 \end{align}
 
+La ecuación \ref{eq:22} garantiza que una sola arista parte de cada nodo negro en la primera posición de su camino. Mientras que \ref{eq:23} asegura que una única arista llega a cada nodo negro, y que esa arista está asociada al segmento de un nodo negro distinto. Además, si en la posición $p$ se alcanza el nodo blanco $i$ entonces en la posición $p+1$ se tiene que salir de ese nodo, y los dos tramos tienen que pertenecer al camino del mismo nodo negro, como se indica en la ecuación \ref{eq:24}. Por último, como en los modelos anteriores, las restricciones \ref{eq:25} relacionan las variables nuevas con las del modelo base.
+
+Al igual que en el modelo dependiente de la posición anterior, las restricciones de salto están satisfechas por el rango de $p$ con el que se definen las variables $Y$, mientras que las restricciones de distancia se pueden escribir así:
+
 \begin{align}
 	& \sum_{p=1}^{Q+1} \sum_{e=\{i, j\} \in E} d_{e}\left(Y_{i j}^{k, p}+Y_{j i}^{k, p}\right) \leq L & \forall k \in B \label{eq:26}
 \end{align}
+
+Como en todos los modelos que introdujimos hasta el momento, vamos a reforzar PDPS evitando ciclos para los dos tipos de vértices, como se indica en las ecuaciones \ref{eq:27} y \ref{eq:28}, generando PDPS$^{+}$.
 
 \begin{align}
 	& Y_{i j}^{k, p} \leq \sum_{h \neq i} Y_{j h}^{k, p+1} & \forall k \in B,\ \forall p \in\{1,2, \ldots, Q\}, \forall e=\{i, j\} \in E, j \in W \label{eq:27} \\
 	& Y_{i j}^{k, p} \leq \sum_{h \neq i} Y_{j h}^{j, 1} & \forall k \in B,\ \forall p \in\{1,2, \ldots, Q+1\}, \forall e=\{i, j\} \in E, j \in B \backslash\{k\} \label{eq:28}
 \end{align}
 
+De la misma manera que en el modelo anterior, esta formulación se puede representar como un grafo de capas. Consideremos el grafo $G_{Q B}=\left(V_{Q B}, A_{Q B}\right)$ que contiene información acerca del nodo negro que inicia un segmento y la posición de todos los nodos blancos incluídos en ese camino. Sus vértices se definen como: $V_{\mathrm{QB}}=\left\{i_{0}^{i}\ |\ i \in B\right\} \cup\left\{i_{p}^{k}\ |\ i \in W,\ p \in\right \{1,2, \ldots, Q\},\ k \in B \}$, donde $i_{p}^{k}$ indica que el nodo $i$ se encuentra en la posición $p$ del segmento que empieza en el nodo $k$ de $B$. En las soluciones válidas cada nodo se visita una sola vez, por lo que $i_{p}^{k}$ va a pertenecer a cada una de ellas con un único $p$ y un único $k$.
+
+El conjunto de aristas se define como: $A_{Q B} = U_{k \in B} A_{Q B}(k)$, donde para cada $k \in B$, $A_{Q B}(k)=\{(i_{p}^{k},\ j_{p+1}^{k})\ |\ \{i_{p}^{k},\ j_{p}^{k}\} \subset V_{Q B},\ (i, j) \in A\} \cup\{(i_{p}^{k}, j_{0}^{j})\ |\ (i, j) \in A,\ j \in B \backslash\{k\} \}$, describiendo así las aristas contenidas en el camino de $k$ y las que podrían conducir hacia el nodo negro siguiente.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{ejemplo_capas_qb.png}
+  \caption{Digrafo en capas $G_{Q B}=\left(V_{Q B}, A_{Q B}\right)$ correspondiente a la instancia dada en la figura \ref{fig:ejemplo_bwtsp}. Las aristas en negrita representan a la solución dada en esa figura. Para ciertos valores de $k$ y $p$ algunos nodos no son alcanzables y no se muestran.}
+  \label{fig:ejemplo_capas_qb}
+\end{figure}
+
+Al igual que en la formulación dependiente de la posición pura, podemos agregar desigualdades relacionadas a representar el modelo como un digrafo en capas. Estas desigualdades resultan de observar que todos los nodos deben ser alcanzables. En particular, agregamos las ecuaciones \ref{eq:29} determinando que al menos una arista tiene que unir el conjunto de nodos negros con el conjunto que contiene las versiones de un nodo blanco para todos los valores posibles de $k$ y $p$. Llamamos PDPS$^{++}$ al modelo resultante de agregar estas inecuaciones a las de PDPS$^{+}$.
+
 \begin{align}
-	& Y\left(\delta^{-}(S)\right) \geq 1 & \forall S \subseteq V_{\mathrm{QB}} \backslash\{j_{0}^{j} : j \in B\},\ \exists i \in W |\left\{i_{p}^{k}, k \in B, p \in\{1,2, \ldots, Q\}\right\} \subseteq S \label{eq:29}
+	& Y\left(\delta^{-}(S)\right) \geq 1 & \forall S \subseteq V_{\mathrm{QB}} \backslash\{j_{0}^{j} : j \in B\},\ \exists i \in W\ |\ \{i_{p}^{k},\ k \in B,\ p \in\{1,2, \ldots, Q\}\} \subseteq S \label{eq:29}
 \end{align}
 
 \subsection{Modelo 2-dimensional}
