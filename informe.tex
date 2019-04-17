@@ -449,18 +449,26 @@ Al igual que en la formulación dependiente de la posición pura, podemos agrega
 
 \subsection{Modelo 2-dimensional}
 
+Hasta esta sección solamente analizamos modelos que hablan de una solución dividida en segmentos, con cada segmento encabezado por un nodo negro. Ahora, vamos a ver una formulación que también indica la posición relativa del segmento dentro del camino final. Como antes, necesitamos asumir que un nodo negro arbitrario inicia el ciclo, y por lo tanto su segmento es el primero. El modelo se basa en las variables $Z_{i j}^{m, p} \in\{0,1\},\ \forall m \in\{1,2, \ldots,|B|\},\ \forall p \in\{1,2, \ldots, Q+1\},\ \forall(i, j) \in A$, que indican si el arco $(i,j)$ está en la posición $p$ del segmento número $m$ del ciclo.
+
 \begin{align}
 	& Z^{1,1}\left(\delta^{+}(1)\right)=1 \label{eq:30} \\
 	& \sum_{j \in B \backslash\{1\}} Z^{m, 1}\left(\delta^{+}(j)\right)=1 & \forall m \in\{2,3, \ldots,|B|\} \label{eq:31} \\
-	& \sum_{i \in V \backslash\{1\}} \sum_{p=1}^{Q+1} \sum_{p=1} \sum_{i 1}^{|B|, p}=1 \label{eq:32} \\
-	& \sum_{i \in V} \sum_{p=1}^{Q+1} \sum_{p=1} Z_{i k}^{m, p}=1 & \forall m \in\{2,3, \ldots,|B|\},\ \forall k \in B \backslash\{1\} \label{eq:33} \\
+	& \sum_{i \in V \backslash\{1\}} \sum_{p=1}^{Q+1} \sum_{(i, 1) \in A} Z_{i 1}^{|B|, p}=1 & \label{eq:32} \\
+	& \sum_{i \in V} \sum_{p=1}^{Q+1} \sum_{(i, k) \in A} Z_{i k}^{m, p}=1 & \forall m \in\{2,3, \ldots,|B|\},\ \forall k \in B \backslash\{1\} \label{eq:33} \\
 	& Z^{m, p}\left(\delta^{-}(i)\right)=Z^{m, p+1}\left(\delta^{+}(i)\right) & \forall m \in\{1,2, \ldots,|B|\}, \forall p \in\{1,2, \ldots, Q\},\ \forall i \in W \label{eq:34} \\
 	& \sum_{m=1}^{|B|} \sum_{p=1}^{Q+1}\left(Z_{i j}^{m, p}+Z_{j i}^{m, p}\right)=x_{e} & \forall e=\{i, j\} \in E \label{eq:35}
 \end{align}
 
+Las restricciones \ref{eq:30} y \ref{eq:31} garantizan que exactamente un segmento se inicia con un nodo negro para cada posición $m \in\{1,2, \ldots,|B|\}$. Por otro lado, las ecuaciones \ref{eq:32} y \ref{eq:33} determinan que la arista que termina el segmento $m-1$ llega al nodo de $B$ que va a empezar el segmento $m$. Las ecuaciones \ref{eq:34} fuerzan el orden de los nodos blancos, y, por último, las ecuaciones de \ref{eq:35} relacionan las variables $Z$ con las del primer modelo.
+
+De forma similar al último modelo discutido, las desigualdades que se usan para modelar el camino implícitamente satisfacen las restricciones de salto, y las restricciones de distancia se pueden expresar así:
+
 \begin{align}
 	& \sum_{p=0}^{Q} \sum_{e=\{i, j\} \in E} d_{e}\left(Z_{i j}^{m, p}+Z_{j i}^{m, p}\right) \leq L \quad \forall m \in\{1,2, \ldots,|B|\} \label{eq:36}
 \end{align}
+
+Reemplazando las restricciones genéricas \ref{eq:4} y \ref{eq:5} del primer modelo por \ref{eq:30}-\ref{eq:36} e incluyendo las definiciones de $Z$ obtenemos la formulación nueva 2PD, a la que denotaremos 2PD$^{+}$ después de incluir \ref{eq:37}-\ref{eq:39} para eliminar ciclos.
 
 \begin{align}
 	& Z_{i j}^{m, p} \leq \sum_{h \neq i} Z_{j h}^{m, p+1} & \forall m \in\{1,2, \ldots,|B|\},\ \forall p \in\{1,2, \ldots, Q\},\ \forall e=\{i, j\} \in E, j \in W \label{eq:37} \\
@@ -468,9 +476,31 @@ Al igual que en la formulación dependiente de la posición pura, podemos agrega
 	& Z_{i 1}^{|B|, p} \leq \sum_{h \neq i} Z_{1 h}^{1,1} & \forall p \in\{1,2, \ldots, Q+1\},\ \forall e=\{i, 1\} \in E \label{eq:39}
 \end{align}
 
+Al igual que en los otros modelos dependientes de la posición, se puede definir un grafo por capas $G_{\mathrm{QI}}=\left(V_{\mathrm{QI}}, A_{\mathrm{QI}}\right)$ que lo representa. Agregar la posición de cada segmento presenta la ventaja de que $G_{QI}$ contiene aristas pertenecientes a un único segmento, y desde este hacia el siguiente. Luego, al introducir una “copia artificial"\ del origen, $G_{QI}$ se convierte en acíclico. Para mantener la consistencia con las secciones previas la definición formal de este grafo no considera las copias del origen, a diferencia de su implementación. Formalmente, el conjunto de vértices de $G_{QI}$ tiene todas las instancias posibles de cada nodo $i$, para poder representar sus ubicaciones posibles dentro de los segmentos con $m$, y cada posición $p$ dentro de él. Cada una de estas instancias se nombra como $i_{p}^{m}$. También se incluyen instancias múltiples de los nodos negros, $i_{0}^{m}$, para comenzar los segmentos. Formalmente, tenemos $V_{\mathrm{QI}}=\bigcup_{m=1}^{|B|} V_{\mathrm{QI}}(m)$ y $A_{\mathrm{QI}}=\bigcup_{m=1}^{|B|} A_{\mathrm{QI}}(m)$, donde $V_{\mathrm{QI}}(m)$ representa el conjunto de nodos que puede encontrarse en el segmento $m$, excepto el nodo negro que lo inicia, mientras que $A_{\mathrm{QI}}(m)$ contiene todas las aristas que podrían pertenecer al segmento $m$. Luego:
+
+$$V_{\mathrm{QI}}(1)=\{1_{0}^{1}\} \cup\{i_{p}^{1}\ |\  i \in W,\ p \in\{1,2, \ldots, Q\} \}$$
+
+$$V_{\mathrm{QI}}(m)=\{i_{0}^{m}\ |\ i \in B \backslash\{1\}\} \cup\{i_{p}^{m}\ |\ i \in W,\ p \in\{1,2, \ldots, Q\}\},\ m \in \{2,3, \ldots,|B|\}$$
+
+
+\begin{multline*}
+	A_{\mathrm{QI}}(m)=\{(i_{p}^{m}, j_{p+1}^{m})\ |\ \{i_{p}^{m},\ j_{p+1}^{m}\} \subseteq V_{\mathrm{QI}}(m),(i, j) \in A\}\ \cup \\ \{(i_{p}^{m},\ j_{0}^{(m+1)})\ |\  i_{p}^{m} \in V_{\mathrm{QI}}(m),\ j_{0}^{(m+1)} \bmod (|B|+1) \in V_{\mathrm{QI}}((m+1) \bmod (|B|+1)),\ (i, j) \in A \}
+\end{multline*}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{ejemplo_capas_qi.png}
+  \caption{Digrafo en capas $G_{QI}=(V_{QI}, A_{QI})$ correspondiente a la instancia dada en la figura \ref{fig:ejemplo_bwtsp}. Las aristas en negrita representan a la solución dada en esa figura. Para ciertos valores de $m$ y $p$ algunos nodos no son alcanzables y no se muestran. El nodo $1_{0}^{1 \prime}$ es una copia artificial de $1_{0}^{1}$ que se incluye para mejorar la representación visual del grafo.}
+  \label{fig:ejemplo_capas_qi}
+\end{figure}
+
+El grafo $G_{QI}$ se definió incluyendo todas las instancias posibles de los nodos blancos. Sin embargo, en la implementación hecha por los autores del trabajo original, el grafo se construye incrementalmente, por lo que sólo contiene los vértices y aristas alcanzables desde al menos un nodo negro inicializador de un segmento. Esta estrategia, junto con rutinas de preprocesamiento, genera grafos mucho menores cuando el original es esparzo.
+
+De nuevo, considerando que cada nodo blanco debe poder alcanzarse desde algún nodo negro mediante un camino formado por nodos blancos, se definen las restricciones \ref{eq:40} basadas en la representación del modelo como un grafo de capas. Vamos a llamar 2PD$^{++}$ a la formulación resultante.
+
 \begin{multline}
-	 Z(\delta^{-}(S)) \geq 1 \quad \quad \forall S \subseteq V_{\mathrm{QI}} \backslash\{i_{0}^{m} | i \in B, m \in\{1,2, \ldots,|B|\}, \\
-	 \exists i \in W : \{i_{p}^{m} | p \in \{1,2, \ldots, Q\}, m \in \{1,2, \ldots,|B|\}\} \subseteq S \label{eq:40}
+	 Z(\delta^{-}(S)) \geq 1 \quad \quad \forall S \subseteq V_{\mathrm{QI}} \backslash\{i_{0}^{m}\ |\ i \in B,\ m \in\{1,2, \ldots,|B|\}, \\
+	 \exists i \in W : \{i_{p}^{m}\ |\ p \in \{1,2, \ldots, Q\},\ m \in \{1,2, \ldots,|B|\}\} \subseteq S \label{eq:40}
 \end{multline}
 
 \section{Modelos alternativos dependientes del tiempo}
