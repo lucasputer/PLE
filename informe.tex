@@ -313,23 +313,23 @@ Esta restricción elimina ciclos al asegurar que si un nodo negro $j$ es el nodo
 
 \section{Formulaciones dependientes de la posición}
 
-En el trabajo original, se analizan también, formulaciones dependientes del tiempo que proveen cotas fuertes. En general, y también en las formulaciones introducidas en esta sección, se agrega información sobre la posición(tiempo) de una arista en el circuito o en el segmento del camino asociado a un vértice negro.
-De esta manera, aseguramos que la restricción de salto sea implicitamente satisfecha, pero con el costo de un significativamente mayor número de variables. En particular, si el límite de saltos no es muy grande, los algoritmos basados en estas formulaciones pueden producir resultados comparables con el estado del arte, o aún mejores.
+En el trabajo original, se analizan también, formulaciones dependientes del tiempo que proveen cotas fuertes. En general, y también en las formulaciones introducidas en esta sección, se agrega información sobre la posición (tiempo) de una arista en el circuito o en el segmento del camino asociado a un vértice negro.
+De esta manera, aseguramos que la restricción de salto sea implícitamente satisfecha, pero con el costo de un significativamente mayor número de variables. En particular, si el límite de saltos no es muy grande, los algoritmos basados en estas formulaciones pueden producir resultados comparables con el estado del arte, o aún mejores.
 
-Se introduciran tres formulaciones dependientes de la posición. La primera se basa en añadir información de la posición de una arista con respecto a su posición después del vértice negro anterior. Sin embargo, no se provee información explícita de cual es el vértice negro que inicializa cada segmento. Esto significa que las restricciones de distancia tienen que ser incluídas de una forma similar a la hecha anteriormente.
+Se introducirán tres formulaciones dependientes de la posición. La primera se basa en añadir información de la posición de una arista con respecto a su posición después del vértice negro anterior. Sin embargo, no se provee información explícita de cual es el vértice negro que inicializa cada segmento. Esto significa que las restricciones de distancia tienen que ser incluidas de una forma similar a la hecha anteriormente.
 
-La segunda, puede ser vista como una reformulacion dependiente de la posición de la formulación PS. Se agrega información sobre el vértice negro previo y la posición relativa es agregada en cada arista. Esta información nos permite modelar las restricciones de distancia.
+La segunda, puede ser vista como una reformulación dependiente de la posición de la formulación PS. Se agrega información sobre el vértice negro previo y la posición relativa es agregada en cada arista. Esta información nos permite modelar las restricciones de distancia.
 
-Por último, una tercer forma de encarar el problema es una variante que puede ser vista como un modelo dependiente de la posición bidimensional. En lugar de especificar explícitamente el vértice negro que inicializa cada segmento, se provee información sobre la posición del segmento en el ciclo general junto con especificar la posición relativa de la arista en el segmento.
+Por último, una tercera forma de encarar el problema es una variante que puede ser vista como un modelo dependiente de la posición bidimensional. En lugar de especificar explícitamente el vértice negro que inicializa cada segmento, se provee información sobre la posición del segmento en el ciclo general junto con especificar la posición relativa de la arista en el segmento.
 Sin perdida de la generalidad, se asume que un nodo arbitrario es elegido como el punto de partida de un ciclo y su segmento asociado se considera como el primer segmento.
 
-Además, se puede interpretar ests formulaciones dependientes de la posición con grafos en capas apropiadamente definidos. Estas interpretaciones ayudan a entender más profundamente la estructura de las soluciones en el espacio de variables extendidas y a encontrar mejores desigualdades válidas en el espacio extendido. Por lo tanto, se usara también este concepto al introducir las tres formulaciones.
+Además, estas formulaciones dependientes de la posición se pueden interpretar con grafos en capas apropiadamente definidos. Estas interpretaciones ayudan a entender más profundamente la estructura de las soluciones en el espacio de variables extendidas y a encontrar mejores desigualdades válidas en el espacio extendido. Por lo tanto, se usará también este concepto al introducir las tres formulaciones.
 La idea consiste en replicar los vértices originales una cantidad de veces en distintas capas y permiten asegurar de forma implícita las restricciones de saltos entre vértices negros consecutivos. Sin embargo, los detalles entre los grafos en capas utilizados en las distintas formulaciones difieren significativamente.
 
 \subsection{Formulación dependiente de la posición pura}
 
-Para esta formulación usamos variables dependientes de la posición $X^p_{ij} \in \{0,1\}, \forall (i,j) \in A, \forall p \in \{1,2,\dots,Q+1\}$.
-Para cada arista $(i,j) \in A$ la variable $X^p_{ij}$ es uno si y solo si esa arista está en las porición $p$ en el camino que empieza en el vértice negro previo. Como $p$ indica la posición en el segmento de camino previo y no en el ciclo general, más de una arista pueden estar en la misma posición $p$
+Para esta formulación usamos las variables dependientes de la posición: $X^p_{ij} \in \{0,1\},\ \forall (i,j) \in A,\ \forall p \in \{1,2,\dots,Q+1\}$.
+Para cada arista $(i,j) \in A$ la variable $X^p_{ij}$ es uno si y solo si esa arista está en las posición $p$ en el camino que empieza en el vértice negro previo. Como $p$ indica la posición en el segmento de camino previo y no en el ciclo general, más de una arista pueden estar en la misma posición $p$
 
 \begin{align}
 	& X^{1}\left(\delta^{+}(k)\right)=1 & \forall k \in B \label{eq:14} \\
@@ -338,16 +338,16 @@ Para cada arista $(i,j) \in A$ la variable $X^p_{ij}$ es uno si y solo si esa ar
 	& \sum_{p=1}^{Q+1}\left(X_{i j}^{p}+X_{j i}^{p}\right)=x_{e} & \forall e=\{i, j\} \in E \label{eq:17}
 \end{align}
 
-Primero veamos que podemos remover las restricciones de salto (4) ya que estas están implicitamente garantizadas por el rango de valores que puede tomar $p$.
-Las restriccciones (14)-(16) nos hablan del balance del flujo de aristas en el espacio de las variables con indices por posición.
+Primero veamos que podemos remover las restricciones de salto \ref{eq:4} ya que estas están implícitamente garantizadas por el rango de valores que puede tomar $p$.
+Las restricciones (\ref{eq:14}-\ref{eq:16} nos hablan del balance del flujo de aristas en el espacio de las variables con indices por posición.
 \begin{itemize}
-  \item (14) indica que una arista sale de cada vértice negro en la posición uno
-  \item (15) dice que llega a cada vértice negro exactamente una arista que pertenece a un segmento de longitud a lo sumo $Q+1$
-  \item (16) establece que una arista puede salir de un vértice blanco $i$ en la posición $p+1$ si y solo si otra arista llega a ese mismo vértice en la posición $p$, es decir que los vértices blancos no son los últimos de un segmento
+  \item \ref{eq:14} indica que una arista sale de cada vértice negro en la posición uno.
+  \item \ref{eq:15} dice que llega a cada vértice negro exactamente una arista que pertenece a un segmento de longitud a lo sumo $Q+1$.
+  \item \ref{eq:16} establece que una arista puede salir de un vértice blanco $i$ en la posición $p+1$ si y solo si otra arista llega a ese mismo vértice en la posición $p$, es decir que los vértices blancos no son los últimos de un segmento.
 \end{itemize}
-Por último, (17) establece un vínculo entre las variables de aristas indexadas por la posición y las variables de aristas no dirigidas definidas previamente.
+Por último, \ref{eq:17} establece un vínculo entre las variables de aristas indexadas por la posición y las variables de aristas no dirigidas definidas previamente.
 
-De esta forma tenemos bien definido nuestro concepto de camino de segmento, aunque sin especificar que vértice negro inicia cada segmento. Por lo tanto, se deben añadir restricciones de eliminación de caminos para eliminar todos los caminas que violan la restricción de distancia.
+De esta forma tenemos bien definido nuestro concepto de segmento de camino, aunque sin especificar que vértice negro inicia cada segmento. Por lo tanto, se deben añadir restricciones de eliminación de caminos para eliminar todos los trayectos que violan la restricción de distancia.
 Por lo tanto, $\mathcal{P}_{inf} \subset 2^E$ denota el conjunto de todos los caminos entre dos vértices negros en $G$ que no contienen vértices negros más adelante y que violan la restricción de distancia.
 Es decir, $\sum_{e \in P} d_e > L, \forall P \in \mathcal{P}_{inf}$
 
@@ -356,7 +356,7 @@ Es decir, $\sum_{e \in P} d_e > L, \forall P \in \mathcal{P}_{inf}$
 	& \sum_{e \in P} x_{e} \leq|P|-1 & \forall P \in \mathcal{P}_{\mathrm{inf}} \label{eq:18}
 \end{align}
 
-Llamamos PD a la formulación dependiente de la posición que se obtiene formalmente de la formulación genérica incluyendo las restricciones (14)-(18) y restricciones por definición para las variables dependientes de la posición $X_{ij}^p$ en lugar de las restricciones genéricas de distancia y salto (4) y (5) respectivamente.
+Llamamos PD a la formulación dependiente de la posición que se obtiene formalmente de la formulación genérica incluyendo las restricciones \ref{eq:14}-\ref{eq:18} y restricciones por definición para las variables dependientes de la posición $X_{ij}^p$ en lugar de las restricciones genéricas de distancia y salto \ref{eq:4} y \ref{eq:5} respectivamente.
 
 Un conjunto polinomial de desigualdades que usualmente mejoran las cotas de las formulaciones dependientes del tiempo son las llamadas desigualdades de dos ciclos. Para el caso de PD, definimos las siguientes desigualdades:
 
@@ -365,38 +365,36 @@ Un conjunto polinomial de desigualdades que usualmente mejoran las cotas de las 
 	& X_{i j}^{p} \leq \sum_{h \neq i} X_{j h}^{1} & \forall p \in\{1,2, \ldots, Q+1\},\ \forall e=\{i, j\} \in E, j \in B \label{eq:20}
 \end{align}
 
-Estas simplemente dicen que si una arista $(i,j)$ está en la posición $p+1$ en un segmento dado, entonces la aprista previa en la posición $p$ convergiente al vertice $i$, no puede diverger del vértice $j$.
-Llamamos a la variante de PD con las restricciones (19) y (20),  PD$^+$
+Estas simplemente dicen que si una arista $(i,j)$ está en la posición $p+1$ en un segmento dado, entonces la arista previa en la posición $p$ convergente al vértice $i$, no puede diverger del vértice $j$.
+Llamamos a la variante de PD con las restricciones \ref{eq:19} y \ref{eq:20},  PD$^+$
 
 Como se introdujo previamente en esta sección, las formulaciones dependientes de la posición pueden ser vistas como formulaciones en un grafo en capas. Ahora, definimos el digrafo en capas $G_Q = (V_Q,A_Q)$ asociado a la formulación PD.
-El conjunto de vértices $V_Q = \{i_0 | i \in B\} \cup \{i_p | i \in W, 1 \leq p \leq Q\}$ consiste de vértices negros en la capa cero (ya que la cuenta de saltos de cada segmento del camino se inicializa por un vértice negro con 0) y copias de los vértices blancos en todas las capas factibles $p, 1 \leq p \leq Q$. Un vértice $i_p$ incluido en una solución,
-indica que el único camino de $i$ al vértice negro que inicia su segmento, tiene longitud $p$.
+El conjunto de vértices $V_Q = \{i_0 | i \in B\} \cup \{i_p | i \in W,\ 1 \leq p \leq Q\}$ consiste de vértices negros en la capa cero (ya que la cuenta de saltos de cada segmento del camino se inicializa por un vértice negro con 0) y copias de los vértices blancos en todas las capas factibles $p, 1 \leq p \leq Q$. Un vértice $i_p$ incluido en una solución, indica que el único camino de $i$ al vértice negro que inicia su segmento, tiene longitud $p$.
 Por lo tanto, en el espacio de $G_Q$, cualquier solución factible debe visitar todos los vértices negros (en la capa cero) y exactamente una copia de cada vértice blanco (en alguna capa $p, 1 \leq p \leq Q$).
 El conjunto de aristas $A_Q$ consiste de:
 \begin{itemize}
-  \item aristas $(i_p,j_{p+1})$ entre dos vértices blancos $i$ y $j$
-  \item aristas $(i_0,j_0)$ entre dos vértices negros $i$ y $j$
-  \item aristas $(i_0,j_1)$ entre un vértice negro $i$ y un vértice blanco $j$
-  \item aristas $(i_p,j_0) 1 \leq p \leq Q$ entre un vértice blanco $i$ y un vértice negro $j$
+  \item aristas $(i_p,j_{p+1})$ entre dos vértices blancos $i$ y $j$,
+  \item aristas $(i_0,j_0)$ entre dos vértices negros $i$ y $j$,
+  \item aristas $(i_0,j_1)$ entre un vértice negro $i$ y un vértice blanco $j$, y
+  \item aristas $(i_p,j_0)$ con $1 \leq p \leq Q$ entre un vértice blanco $i$ y un vértice negro $j$.
 \end{itemize}
 
-Formalmente, 
-$$A_Q = \{(i_p,j_{p+1}) | i_p,j_{p+1} \in V_Q, (i,j) \in A\} \cup \{(i_0,j_0) | i,j \in B, (i,j) \in A\} \cup \{(i_p,j_0) | i \in W, j \in B,i_p \in V_Q (i,j) \in A\}$$
+Formalmente: $A_Q = \{(i_p,j_{p+1})\ |\ i_p,j_{p+1} \in V_Q,\ (i,j) \in A\} \cup \{(i_0,j_0)\ |\ i,j \in B, (i,j) \in A\} \cup \{(i_p,j_0)\ |\ i \in W,\ j \in B,\ i_p \in V_Q (i,j) \in A\}$.
 
 La interpretación de PD en el grafo $G_Q$ está basada en asociar cada una de las variables definidas previamente $X_{ij}^p$ ya se con la arista $(i_{p-1},j_p)$ si $j \in W$, o bien la arista $(i_{p-1},j_0)$ si $j \in B$.
-La figura en \ref{fig:ejemplo_capas} muestra la solución de la figura \ref{fig:ejemplo_bwtsp} en el contexto del digrafo $G_Q$
+La figura en \ref{fig:ejemplo_capas} muestra la solución de la figura \ref{fig:ejemplo_bwtsp} en el contexto del digrafo $G_Q$.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.7\textwidth]{ejemplo_capas.png}
-  \caption{Digrafo en capas $G_Q = (V_Q,A_Q)$ correspondiente a la instancia dada en la figura \ref{fig:ejemplo_bwtsp}. Las aristas en negrita represantan a la solución dada en esa figura.}
+  \caption{Digrafo en capas $G_Q = (V_Q,A_Q)$ correspondiente a la instancia dada en la figura \ref{fig:ejemplo_bwtsp}. Las aristas en negrita representan a la solución dada en esa figura.}
   \label{fig:ejemplo_capas}
 \end{figure}
 
 Hay varias desigualdades validas que mejoran significativamente las cotas de LP del modelo dependiente del tiempo y que son más fáciles de describir en términos del digrafo $G_Q$.
-Se pueden considerar desigualdades de corte especificas para grafos en capas más generales que no corresponden con los $\textbf{x}$-cortes reescritos col las variables $X_{ij}^p$ via las ecuaciones (17).
+Se pueden considerar desigualdades de corte especificas para grafos en capas más generales que no corresponden con los $\textbf{x}$-cortes reescritos col las variables $X_{ij}^p$ vía las ecuaciones \ref{eq:17}.
 Diferentes clases de estas desigualdades de corte pueden ser obtenidas de la observación de que todos los vértices deben ser alcanzables desde el vértice de salida $1_0$ que se asume, sin pérdida de la generalidad, como el comienzo del ciclo. 
-El trabajo estudiado considera al conjunto de desigualdades (21) que asegura que al menos una arista debe cruzar cada corte, separando al conjunto de vértices negros de todas las copias de un vértice blanco dado.
+El trabajo estudiado considera al conjunto de desigualdades \ref{eq:21} que asegura que al menos una arista debe cruzar cada corte, separando al conjunto de vértices negros de todas las copias de un vértice blanco dado.
 
 \begin{align}
 	& X\left(\delta^{-}(S)\right) \geq 1 & \forall S \subseteq V_{\mathrm{Q}} \backslash\left\{j_{0} : j \in B\right\}, \exists i \in W |\left\{i_{p}, p \in\{1,2, \ldots, Q\}\right\} \subseteq S \label{eq:21}
