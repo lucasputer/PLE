@@ -15,7 +15,7 @@
 \usepackage{comment}
 \usepackage{hyperref}
 \usepackage{ dsfont }
-
+\usepackage{multirow}
 \usepackage{listings}
 \usepackage{listingsutf8}
 \usepackage{color}
@@ -507,6 +507,32 @@ De nuevo, considerando que cada nodo blanco debe poder alcanzarse desde algún n
 
 \section{Comparaciones teóricas}
 
+\begin{center}
+  \begin{tabular}{ |c c|c|c|c| } 
+  \hline
+  Nombre & Descripción & Variables& Restr. de dist. & Restr. de salto \\
+  \hline
+  \multirow{1}{4em}{PS} 
+  & seg. de camino & $x_{ij}^k k \in B$ & $\sum_{e \in E} d_{e} x_{i j}^{k} \leq L ,k \in B$ &  $\sum_{e \in E}x_{e}^{k} \leq Q+1 , k \in B$ \\ 
+  \hline
+  \hline
+  \multirow{1}{4em}{PD} 
+  & Depend. de la pos. & $x_{ij}^p, p \in \{1,\dots,Q+1\}$ & $\sum_{e \in P} x_e \leq |P| - 1, P \in \mathcal{P}_{inf}$ &  - \\ 
+  \hline
+  \multirow{2}{4em}{PDPS} 
+  & Depend. de la pos. & $Y_{ij}^{k,p}, k \in B$ & $\sum_{p = 0}^{Q} \sum_{i \in W \cup \{k\}} \sum_{(i,j)\in \delta}^+(i) d_{ij}Y_{ij}^{k,p} \leq L$ &  - \\ 
+  & seg. de camino & $p \in \{1,\dots,Q+1\}$ & $, k \in B$ & \\
+  \hline
+  \multirow{2}{4em}{2PD} 
+  & bidim. & $Z_{ij}^{m,p}, m \in \{1,\dots,|B|\}$ & $\sum_{p = 0}^{Q} \sum_{(i,j) \in A}  d_{ij}Z_{ij}^{m,p} \leq L$ &  - \\ 
+  & Depend. de la pos. & $p \in \{1,\dots,Q+1\}$ & $, m \in \{1,\dots,|B|\}$ & \\
+  \hline
+  \hline
+
+\end{tabular}
+  \end{center}
+
+  
 \subsection{Pre-procesamiento}
 
 \subsection{Algoritmo de plano de corte}
