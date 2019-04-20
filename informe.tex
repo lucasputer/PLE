@@ -505,33 +505,29 @@ De nuevo, considerando que cada nodo blanco debe poder alcanzarse desde algún n
 
 \section{Modelos alternativos dependientes del tiempo}
 
+Todos los modelos que fueron introducidos en las secciones previas se basan en variables que determinan la posición de las aristas en los distintos segmentos que forman el camino. La definición de estas variables permite cumplir implícitamente las restricciones de salto, mientras que las restricciones de distancia se garantizan con ecuaciones adicionales. Se puede ver que modelos similares pueden ser obtenidos con variables que representan la distancia de las aristas dentro de cada segmento y así aseguran implícitamente que la distancia no se exceda del límite $L$. En este caso, entonces, las restricciones de salto se aseguran agregando restricciones de una manera similar a las restricciones de distancia de los modelos previos.
+
+DD, DDPS y 2DD se pueden obtener modificando los modelos previos dependientes de la posición. DD se basa en las variables $\^X_{ij}^{d} \in \{0,1\},\ d \in \{1,2,\dots,L\},\ \forall(i,j) \in A$ que indican si un camino a $j$ desde el nodo negro previo usando la arista $(i,j)$ tiene una distancia total de $d$. Por otra parte, DDPS usa variables como $\^Y_{ij}^{k,d} \in \{0,1\},\ \forall k \in B,\ \forall d \in \{1,2,\dots,L\},\ \forall (i,j) \in A$, determinando implícitamente la distancia del nodo $j$ en el camino desde el nodo $k$, si la arista $(i,j)$ es parte del camino final. Por último, la representación 2DD hace uso de variables como $\^Z_{ij}^{m,d} \in \{0,1\},\ \forall m \in \{1,2,\dots,|B|\},\ \forall d \in \{1,2,\dots,L\},\ \forall(i,j)\ \in A$, que indican la longitud de los caminos hacia cada vértice después del nodo negro $m$. Las variantes DD$^{+}$, DDPS$^{+}$ y 2DD$^{+}$ se construyen agregando las versiones modificadas apropiadamente de las restricciones para eliminar ciclos definidas previamente. También analizamos DD$^{++}$, DDPS$^{++}$ y 2DD$^{++}$, adaptando las representaciones con grafos de capas a estos casos, e incluyendo los cortes, apropiadamente redefinidos, basados en estas representaciones.
+
+El modelo PDDD se basa en unir, eliminando ecuaciones redundantes, las restricciones de PD y las de DD. Los dos conjuntos de variables, $X$ y $\^X$, se relacionan a través de $x$ del modelo base, y también se extiende para formar PDDD$^{+}$ y PDDD$^{++}$.
+
+Por último, en el trabajo original también se incluye el modelo 3PD que combina información sobre la posición de las aristas y su distancia al principio del segmento. Es decir, usa las variables $X_{ij}^{p,d},\ \forall p \in \{1,2,\dots,Q+1\},\ \forall d \in \{1,2,\dots,L\},\ \forall (i,j) \in A$, que hacen explícitas la posición y la distancia de las aristas dentro de su segmento del camino. De nuevo, 3PD$^{+}$ y 3PD$^{++}$ se construyen como en el caso de los modelos previos.
+
 \section{Comparaciones teóricas}
 
-\begin{center}
-  \begin{tabular}{ |c c|c|c|c| } 
-  \hline
-  Nombre & Descripción & Variables& Restr. de dist. & Restr. de salto \\
-  \hline
-  \multirow{1}{4em}{PS} 
-  & seg. de camino & $x_{ij}^k k \in B$ & $\sum_{e \in E} d_{e} x_{i j}^{k} \leq L ,k \in B$ &  $\sum_{e \in E}x_{e}^{k} \leq Q+1 , k \in B$ \\ 
-  \hline
-  \hline
-  \multirow{1}{4em}{PD} 
-  & Depend. de la pos. & $x_{ij}^p, p \in \{1,\dots,Q+1\}$ & $\sum_{e \in P} x_e \leq |P| - 1, P \in \mathcal{P}_{inf}$ &  - \\ 
-  \hline
-  \multirow{2}{4em}{PDPS} 
-  & Depend. de la pos. & $Y_{ij}^{k,p}, k \in B$ & $\sum_{p = 0}^{Q} \sum_{i \in W \cup \{k\}} \sum_{(i,j)\in \delta}^+(i) d_{ij}Y_{ij}^{k,p} \leq L$ &  - \\ 
-  & seg. de camino & $p \in \{1,\dots,Q+1\}$ & $, k \in B$ & \\
-  \hline
-  \multirow{2}{4em}{2PD} 
-  & bidim. & $Z_{ij}^{m,p}, m \in \{1,\dots,|B|\}$ & $\sum_{p = 0}^{Q} \sum_{(i,j) \in A}  d_{ij}Z_{ij}^{m,p} \leq L$ &  - \\ 
-  & Depend. de la pos. & $p \in \{1,\dots,Q+1\}$ & $, m \in \{1,\dots,|B|\}$ & \\
-  \hline
-  \hline
+No se pueden establecer relaciones de dominancia entre muchos de los modelos propuestos porque incorporan conjuntos diferentes y no relacionados de restricciones para modelar los requerimientos del problema. Sin embargo, en algunos casos es posible establecer relaciones basadas en “sentido común"\ acerca de los modelos dependientes de la posición. Antes de comentar estas relaciones vamos a introducir notación necesaria.
 
-\end{tabular}
-  \end{center}
+Para un modelo $M$, $P(M)$ va a denotar al poliedro inducido por su relajación lineal, y $proj_{x}(P(M))$ a la proyección ortogonal del polinomio $P(M)$ al espacio formado por las variables que representan aristas no dirigidas, que fueron introducidas en el modelo base.
 
+Además, un modelo $M$ se puede considerar como:
+
+\begin{itemize}
+	\item \textit{al menos tan fuerte} como el modelo $M'$ si $proj_{x}(P(M)) \subseteq proj_{x}(P(M'))$ vale para todas las instancias;
+	\item \textit{más fuerte} que $M'$ si $proj_{x}(P(M)) \subseteq proj_{x}(P(M'))$ vale para todas las instancias y existe al menos una para la que la inclusión es estricta;
+	\item \textit{incomparable} a $M'$ si existen instancias para las que $proj_{x}(P(M)) \subseteq proj_{x}(P(M'))$ vale, e instancias para las que $proj_{x}(P(M')) \subseteq proj_{x}(P(M))$ vale.
+\end{itemize}
+
+\section{Algoritmos}
   
 \subsection{Pre-procesamiento}
 
