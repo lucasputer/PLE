@@ -601,6 +601,19 @@ Para manejar el gran número de desigualdades y la convergencia lenta de los pla
 
 \subsection{Heurísticas}
 
+Las cotas son esenciales para podar el árbol de branch and bound, y en este trabajo también decidieron usar heurísticas en cada nodo del árbol. Estas heurísticas se llaman después de cada iteración de corte en la raíz, en uno de cada cinco nodos dentro de los primeros 100, en uno de cada 25 en los primeros 1000, en uno de cada 100 en los primeros 5000, y en uno de cada 500 en el resto.
+
+Para construir soluciones factibles aplican una heurística de vecinos más cercanos guiada por la solución lineal del nodo actual. El camino se extiende paso por paso eligiendo el sucesor no visitado más “barato"\ que cumple las condiciones de salto pero no necesariamente las de distancia. Para esto también se considera el número mínimo de nodos blancos después de cada nodo negro $Q_{min}$.
+
+Para arreglar y mejorar una solución, corren una variante de GVNS \cite{gvns}. VNS es una metaheurística para resolver problemas de optimización. Explora vecindarios distantes de la solución actual y se mueve a uno nuevo solamente si se obtiene una mejora. Mientras que GVNS es una variante de VNS que usa VND para las búsquedas locales. VND es una variante de VNS que cambia de vecindario de forma determinística. Con una probabilidad de 0.5 se elije la mejor solución global como inicio en una iteración de GVNS, en caso contrario se usa la mejor solución encontrada en la ejecución actual de la heurística. Para mejorar localmente la solución, VND hace dos tipos de cambios:
+
+\begin{itemize}
+	\item Mueve un nodo a otra posición del ciclo.
+	\item Intercambia la posición de dos vértices.
+\end{itemize}
+
+En cada iteración de VND se buscan movimientos en ambos vecindarios, para reducir las distancias si esa restricción todavía no se cumple, o para mejorar la calidad de la solución. Se elije aleatoriamente entre los cinco mejores movimientos, valorando más acercarse a cumplir las restricciones de distancia que mejorar el costo. Para diversificar la solución en GVNS se aplican $\lceil 0.05 \times |V| \rceil$ intercambios aleatorios, manteniendo la viabilidad de los saltos y sin aumentar las distancias inválidas. Si después de dos iteraciones de GVNS no se mejora la solución global entonces se aumenta en uno la cantidad de nodos que se intercambian, hasta  $\lceil 0.3 \times |V| \rceil$ como máximo. La heurística termina si después de 20 iteraciones de GVNS no se encuentra una solución mejor. Las soluciones finales que no cumplen con las ecuaciones de distancia se abandonan, pero es algo que casi no se vio en las experimentaciones.
+
 \section{Resultados empíricos}
 
 (Por ahí habría que mejorar este título)
@@ -632,6 +645,9 @@ J. Clausen, “Branch and Bound Algorithms—Principles and Examples". 1999.
 
 \bibitem{cplex}
 IBM ILOG CPLEX Optimization Studio. URL: \url{https://www.ibm.com/es-es/products/ilog-cplex-optimization-studio}. [En línea, accedido el 23 de abril de 2019.]
+
+\bibitem{gvns}
+P. Venkatesh, G. Srivastava y A. Singh, “A general variable neighborhood search algorithm for the k-traveling salesman problem". 2018.
 
 \end{thebibliography}
 
