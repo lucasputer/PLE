@@ -28,6 +28,7 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definición}[section]
+\newtheorem{theorem}{Teorema}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -526,6 +527,39 @@ Además, un modelo $M$ se puede considerar como:
 	\item \textit{más fuerte} que $M'$ si $proj_{x}(P(M)) \subseteq proj_{x}(P(M'))$ vale para todas las instancias y existe al menos una para la que la inclusión es estricta;
 	\item \textit{incomparable} a $M'$ si existen instancias para las que $proj_{x}(P(M)) \subseteq proj_{x}(P(M'))$ vale, e instancias para las que $proj_{x}(P(M')) \subseteq proj_{x}(P(M))$ vale.
 \end{itemize}
+
+A efectos de poder comparar modelos, vamos a considerar un reformulación de PDPS, PDPS', que se obtiene reemplazando las restricciones de distancia \ref{eq:26} por las restricciones que eliminan caminos de PD reescritas con la variable $Y$ en las ecuaciones \ref{eq:25}. De una manera similar se podría obtener 2PD', a partir de 2PD, reemplazando las restricciones de distancia \ref{eq:36} por lo mismo que en el modelo anterior pero en las ecuaciones \ref{eq:35}. En el trabajo original remarcan que los experimentos computacionales indican que PDPS es significativamente más fuerte en la práctica que PDPS', por lo que no lo consideramos en el resto del texto.
+
+Como comentamos tres párrafos atrás, en algunos casos es posible establecer relaciones, y estas son:
+
+% 1
+\begin{theorem}
+	PDPS es más fuerte que PS.
+\end{theorem}
+
+% 2
+\begin{theorem}
+	PDPS' es al menos tan fuerte como PD.
+\end{theorem}
+
+% 3
+\begin{theorem}
+	2PD' es al menos tan fuerte como PD.
+\end{theorem}
+
+% 4
+\begin{theorem}
+	PDDD es más fuerte que PD.
+\end{theorem}
+
+% 5
+\begin{theorem}
+	3PD es más fuerte que PDDD.
+\end{theorem}
+
+El teorema 1 vale porque PDPS es una reformulación de PS dependiente de la posición.
+
+Resultados análogos a los de los teoremas 4 y 5 se pueden expresar para formulaciones alternativas que implícitamente garantizan las restricciones de distancia, y que usan tipos diferentes de ecuaciones para modelar las restricciones de salto.
 
 \section{Algoritmos}
   
