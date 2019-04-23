@@ -579,6 +579,26 @@ Este valor se usa para fijar una cota inferior al lado izquierdo de las restricc
 
 \subsection{Algoritmo de plano de corte}
 
+Los conjuntos de desigualdades siguientes no se incluyen inicialmente en los modelos, pero se agregan dinámicamente como planos de corte.
+
+Se buscan desigualdades que no valgan en el orden dado a continuación, en caso de que se identifique al menos un corte así en el conjunto se resuelve la relajación lineal, y se continúa con el siguiente conjunto. Podemos decir que una desigualdad “no vale"\ si reduce el tamaño del polítopo actual que representa el problema.
+
+\begin{itemize}
+	\item Violaciones a las restricciones de conectividad \ref{eq:3} se encuentran mediante cálculos de flujo máximo en un grafo con sus capacidades basadas en la solución $\overline{x}$ actual.
+	\item Las restricciones que eliminan caminos inválidos \ref{eq:18} solamente se agregan para soluciones enteras, porque cuando se aplican a soluciones fraccionarias se agregan demasiadas desigualdades que no valen. A esta altura del procedimiento las soluciones enteras ya son ciclos TSP, por lo que encontrar caminos inviables se puede hacer en tiempo lineal.
+	\item Las desigualdades de balanceo de flujo \ref{eq:9}, \ref{eq:16}, \ref{eq:24} y \ref{eq:34} se separan por enumeración.
+	\item De la misma forma que en el punto anterior se separan las restricciones que eliminan ciclos \ref{eq:19}, \ref{eq:20}, \ref{eq:27}, \ref{eq:28}, \ref{eq:37}, \ref{eq:38} y \ref{eq:39}.
+	\item Los cortes basadas en las representaciones como grafos de capas de los modelos \ref{eq:21}, \ref{eq:29} y \ref{eq:40}, se separan como los de conectividad \ref{eq:3}. La diferencia principal es que hay que garantizar que todas las copias de al menos nodo blanco estén en el conjunto de soluciones posibles, lo que se garantiza asignando capacidades altas a las aristas desde todas las copias de un nodo blanco en particular a un sumidero artificial. Se quiere garantizar esta condición para contar con al menos una solución candidata para cada ubicación posible de un nodo blanco. % NO ESTOY SEGURA DE QUE ESA EXPLICACIÓN ESTÉ BIEN
+\end{itemize}
+
+Para manejar el gran número de desigualdades y la convergencia lenta de los planos de corte, se aplican las siguientes reglas:
+
+\begin{itemize}
+	\item Supongamos que una desigualdad válida en un grafo de capas $G_{Q}$ tiene la forma $\overline{X}(A) \geq b$. Solamente agregamos el corte si $\overline{X}(A) < \Delta \times b$ con $\Delta \in (0,1]$.
+	\item Si el valor de la relajación lineal no aumenta en las últimas cinco iteraciones de los planos de corte en un nodo de branch and bound se continúa con la ramificación.
+	\item Después de resolver un problema de flujo máximo para buscar conjuntos de cortes violados podríamos obtener soluciones múltiples. En ese caso, consideramos las soluciones que generan el conjunto menor y el mayor, y agregamos también la que tiene el número mínimo de cortes.
+\end{itemize}
+
 \subsection{Heurísticas}
 
 \section{Resultados empíricos}
