@@ -563,7 +563,19 @@ Resultados análogos a los de los teoremas 4 y 5 se pueden expresar para formula
 
 \section{Algoritmos}
   
+Para implementar los modelos propuestos, los autores del trabajo original desarrollan algoritmos de branch and cut basados en IBM ILOG CPLEX\cite{cplex}.
+
+En las próximas secciones $\overline{x}$, $\overline{X}$ y demás variables de la misma forma, van a denotar a las relajaciones lineales de $x$ y $X$, respectivamente.
+  
 \subsection{Pre-procesamiento}
+
+Antes de ejecutar el algoritmo se aplica un procesamiento basado en computar el número mínimo de nodos blancos $Q_{min}$ que puede estar contenido en cualquier camino entre dos nodos negro sucesivos. Este mínimo se obtiene para un camino cuando todos los otros contienen $Q$ nodos y si $|W| > Q \times (|B| - 1)$, y es cero en caso contrario:
+
+$$
+Q_{min} = max\{0,\ |W|\ -\ Q \times (|B| - 1)\}
+$$
+
+Este valor se usa para fijar una cota inferior al lado izquierdo de las restricciones de salto, porque las restricciones de salto modeladas establecen únicamente cotas superiores para su lado izquierdo. También se usa para las variables de PD que indicarían segmentos demasiado cortos: $X_{ij}^{p} = 0$ cuando $j \in B$ para todos los $p \leq Q_{min}$. Es decir, no puede haber una arista que llegue a un nodo negro en una posición del segmento menor a $Q_{min}$ porque esa es la cantidad mínima de nodos blancos entre cada par de nodos negros. Las variables dependientes de la posición de PDPS, 2PD, PDDD y 3PD se limitan de una forma similar.
 
 \subsection{Algoritmo de plano de corte}
 
@@ -597,6 +609,9 @@ J. E. Mitchell, “Branch-and-Cut Algorithms for Combinatorial Optimization Prob
 
 \bibitem{branc_and_bound}
 J. Clausen, “Branch and Bound Algorithms—Principles and Examples". 1999.
+
+\bibitem{cplex}
+IBM ILOG CPLEX Optimization Studio. URL: \url{https://www.ibm.com/es-es/products/ilog-cplex-optimization-studio}. [En línea, accedido el 23 de abril de 2019.]
 
 \end{thebibliography}
 
