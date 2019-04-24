@@ -518,8 +518,17 @@ Por último, en el trabajo original también se incluye el modelo 3PD que combin
 
 No se pueden establecer relaciones de dominancia entre muchos de los modelos propuestos porque incorporan conjuntos diferentes y no relacionados de restricciones para modelar los requerimientos del problema. Sin embargo, en algunos casos es posible establecer relaciones basadas en “sentido común"\ acerca de los modelos dependientes de la posición. Antes de comentar estas relaciones vamos a introducir notación necesaria.
 
-Para un modelo $M$, $P(M)$ va a denotar al poliedro inducido por su relajación lineal, y $proj_{x}(P(M))$ a la proyección ortogonal del polinomio $P(M)$ al espacio formado por las variables que representan aristas no dirigidas, que fueron introducidas en el modelo base.
+Para un modelo $M$, $P(M)$ va a denotar al poliedro inducido por su relajación lineal, y $proj_{x}(P(M))$ a la proyección ortogonal del poliedro $P(M)$ al espacio formado por las variables que representan aristas no dirigidas, que fueron introducidas en el modelo base.
+En la figura \ref{fig:ejemplo_proy} se puede ver un ejemplo gráfico de una projección ortogonal. Para tener una noción informal, podríamos decir que  $proj_{x}(P(M))$ se consigue al \textit{achatar} el poliedro $P(M)$ sobre el espacio de las variables de aristas no dirigidas, perdiendo una dimensión.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{ejemplo_proy.png}
+  \caption{Ejemplo de proyección ortogonal}
+  \label{fig:ejemplo_proy}
+\end{figure}
+
+% Tal vez aca podriamos poner un ejemplo grafico de que es una proyeccion
 Además, un modelo $M$ se puede considerar como:
 
 \begin{itemize}
@@ -581,8 +590,7 @@ Este valor se usa para fijar una cota inferior al lado izquierdo de las restricc
 
 Los conjuntos de desigualdades siguientes no se incluyen inicialmente en los modelos, pero se agregan dinámicamente como planos de corte.
 
-Se buscan desigualdades que no valgan en el orden dado a continuación, en caso de que se identifique al menos un corte así en el conjunto se resuelve la relajación lineal, y se continúa con el siguiente conjunto. Podemos decir que una desigualdad “no vale"\ si reduce el tamaño del polítopo actual que representa el problema.
-
+Se buscan desigualdades que no valgan en el orden dado a continuación, en caso de que se identifique al menos un corte así en el conjunto se resuelve la relajación lineal, y se continúa con el siguiente conjunto. Podemos decir que una desigualdad “no vale"\ si reduce el tamaño del polítopo (un poliedro acotado) actual que representa el problema.
 \begin{itemize}
 	\item Violaciones a las restricciones de conectividad \ref{eq:3} se encuentran mediante cálculos de flujo máximo en un grafo con sus capacidades basadas en la solución $\overline{x}$ actual.
 	\item Las restricciones que eliminan caminos inválidos \ref{eq:18} solamente se agregan para soluciones enteras, porque cuando se aplican a soluciones fraccionarias se agregan demasiadas desigualdades que no valen. A esta altura del procedimiento las soluciones enteras ya son ciclos TSP, por lo que encontrar caminos inviables se puede hacer en tiempo lineal.
@@ -642,6 +650,18 @@ Elegir valores razonables para $L$ no es trivial. En el trabajo original usan la
 \subsection{Relajaciones}
 
 \subsection{Análisis de los resultados}
+
+\subsection{Conclusión}
+En el trabajo estudiado, se observaron distintos modelos de PLE y algoritmos de branch-and-cut para resolver BWTSP.
+Las formulaciones que se vieron se basan en una estrategia que esta entre medio de dos estrategias propuestas en la literatura.
+Se propusieron, siguiendo la estrategia, varias formulaciones dependientes de la posición y la distancia junto con sus representaciones de grafos en capas.
+Los resultados que arroja el trabajo estudiado, muestran que los modelos propuestos funcionan en instancias particulares y en instancias con diferentes características.
+Los modelos utilizados, si se aplican correctamente, pueden atacar la mayoria de las instancias vistas.
+Los resultados que obtuvieron, confirman que al modelar ideas teoricamente fuertes pero con furmulaciones muy grandes como el modelo PDDD y 3PD sirven para instancias acotadas ajustadamente al ser comparados con las formulaciones standard.
+También se puede ver en los resultados la necesidad de entender más profundamente como separar las desigualdades de grafos en capas sin que aumente el tamaño del modelo de forma significativa.
+
+Desde nuestra perspectiva de estudiantes, realizar este trabajo práctico nos ayudó para afianzar los contenidos vistos en la materia. El hecho de tener que poder explicar un trabajo en términos más simples,
+requiere un entendimiento más profundo de los temas vistos en clase y nos ayudó a nosotros mismos a terminar de comprender conceptos vistos en el seminario.
 
 \pagebreak
 
