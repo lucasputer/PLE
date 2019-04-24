@@ -651,7 +651,13 @@ Sea $c_{OPT}$ la solución entera óptima y $c_{LP}$ el valor óptimo de la rela
 
 Notaron que las diferencias con las relajaciones de la mayoría de los modelos se reducen significativamente al agregar las restricciones que eliminan ciclos ($^{+}$). Mientras que agregar las desigualdades que se basan en las representaciones de grafos ($^{++}$) solamente produce beneficios marginales en la mayoría de los casos. También mostraron que estas diferencias aumentan a medida que disminuye el valor de $\gamma$, es decir, cuando las condiciones de distancia son más restrictivas. Además, en el trabajo original mostraron que todas las relaciones teóricas parecen valer en la práctica.
 
+
 \subsection{Análisis de los resultados}
+En el trabajo se identificaron los algoritmos más prometedores para reducir el número de variantes antes de analizarlas en más detalle. Se puede ver en más detalle los resultados en las tablas que se encuentran en el trabajo estudiado.
+Se observó que las instancias de GRL2 con todos los vértices negros en el centro del cuadrado fueron más dificiles de resolver que  GRL1 para todos los algoritmos.
+Se puede ver en las comparaciones como el aumento en las cotas de PL de DDPS y 2DD pierde sentido si tenemos en cuenta el tiempo adicional requerido para resolver los modelos significativamente más grandes.
+También se observó que PDDD y 3PD, que satisfacen implícitamente las restricciones de salto y distancia performan razonablemente bien. Además, las variantes que tienen desigualdades de dos ciclos son un poco mejores que las que consideran los cortes en grafos en capas.
+
 
 \subsection{Conclusión}
 En el trabajo estudiado, se observaron distintos modelos de PLE y algoritmos de branch-and-cut para resolver BWTSP.
