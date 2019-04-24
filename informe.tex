@@ -614,11 +614,30 @@ Para arreglar y mejorar una solución, corren una variante de GVNS \cite{gvns}. 
 
 En cada iteración de VND se buscan movimientos en ambos vecindarios, para reducir las distancias si esa restricción todavía no se cumple, o para mejorar la calidad de la solución. Se elije aleatoriamente entre los cinco mejores movimientos, valorando más acercarse a cumplir las restricciones de distancia que mejorar el costo. Para diversificar la solución en GVNS se aplican $\lceil 0.05 \times |V| \rceil$ intercambios aleatorios, manteniendo la viabilidad de los saltos y sin aumentar las distancias inválidas. Si después de dos iteraciones de GVNS no se mejora la solución global entonces se aumenta en uno la cantidad de nodos que se intercambian, hasta  $\lceil 0.3 \times |V| \rceil$ como máximo. La heurística termina si después de 20 iteraciones de GVNS no se encuentra una solución mejor. Las soluciones finales que no cumplen con las ecuaciones de distancia se abandonan, pero es algo que casi no se vio en las experimentaciones.
 
-\section{Resultados empíricos}
+\section{Resultados computacionales}
 
-(Por ahí habría que mejorar este título)
+A lo largo de estas secciones vamos a usar los nombres de los modelos para referirnos a sus algoritmos de branch and cut correspondientes.
 
 \subsection{Instancias}
+
+Para las experimentaciones se usaron tres tipos distintos de instancias.
+
+Las instancias MUT básicamente están formadas por $|V|$ nodos ubicados aleatoriamente en un cuadrado de 1000$\times$1000 con costos y distancias correspondientes a sus distancias euclidianas. Para cada cantidad de nodos $|V| \in \{20,40,60,80\}$ hay cinco instancias disponibles. Para cada una de ellas el problema se intenta resolver con $Q = \alpha \times |V|$ para todos los valores de $\alpha \in \{0{.}2, 0{.}3, 0{.}4\}$, y con $|B| = \beta \times b_{min}$ para $\beta \in \{1{.}00, 1{.}33, 1{.}67\}$ y $b_{min}$ siendo la cantidad mínima de nodos negros que se necesitan para factibilidad, es decir, el mínimo entero que satisface $b_{min} = \lceil (|V| - b_{min})/Q \rceil$. Los valores de $L$ se van a analizar luego.
+
+Las conclusiones a las que se puede llegar a partir de experimentos basados en MUT están limitadas por dos motivos:
+
+\begin{itemize}
+	\item Los costos y las distancias son idénticas para cada instancia.
+	\item Los nodos negros se elijen de forma aleatoria entre los nodos de V, por lo que no se puede comparar la dificultad para distribuciones distintas de nodos de B pero con los mismos valores de $|V|$, $Q$, $|B|$ y $L$.
+\end{itemize}
+
+Por estos motivos se crearon otros dos conjuntos de instancias: GLR1 y GLR2. Los nodos y los costos de las aristas se generan de una manera similar a MUT, pero las distancias se asignan como un valor aleatorio de $\{1,2,\dots,10\}$.
+
+En GLR1 los nodos negros se ubican en el cuadrado eligiendo aleatoriamente uno inicial, y luego iterativamente eligiendo el nodo que minimiza la distancia euclidiana a los nodos negros ya fijados. Mientras que en GLR2 los nodos de $B$ se elijen como los puntos más cercanos al centro del cuadrado. Para cada $|V| \in \{20,40,60,80\}$ se crean cinco instancias y se evalúan con dos valores distintos de $Q \in \{4,8\}$, tres valores para $\beta \in \{1{.}00, 1{.}33, 1{.}67\}$ y $L$.
+
+Elegir valores razonables para $L$ no es trivial. En el trabajo original usan la misma estrategia que otros de la literatura, fijando $L = \gamma \times L_{max}$ con $\gamma \in (0,1]$ y siendo $L_{max}$ la longitud del camino máximo entre dos nodos negro consecutivos en la solución óptima para $L = \infty$. En algunos casos no fue posible encontrar una solución con esta técnica, por lo que se uso la mejor solución encontrada al intentar computar $L_{max}$. Para MUT usaron $\gamma \in \{0{.}7, 0{.}8\}$ y para GLR1/2 $\gamma \in \{0{.}6, 0{.}8\}$.
+
+
 
 \subsection{Relajaciones}
 
