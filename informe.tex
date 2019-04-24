@@ -645,9 +645,11 @@ En GLR1 los nodos negros se ubican en el cuadrado eligiendo aleatoriamente uno i
 
 Elegir valores razonables para $L$ no es trivial. En el trabajo original usan la misma estrategia que otros de la literatura, fijando $L = \gamma \times L_{max}$ con $\gamma \in (0,1]$ y siendo $L_{max}$ la longitud del camino máximo entre dos nodos negro consecutivos en la solución óptima para $L = \infty$. En algunos casos no fue posible encontrar una solución con esta técnica, por lo que se uso la mejor solución encontrada al intentar computar $L_{max}$. Para MUT usaron $\gamma \in \{0{.}7, 0{.}8\}$ y para GLR1/2 $\gamma \in \{0{.}6, 0{.}8\}$.
 
+\subsection{Relajaciones lineales}
 
+Sea $c_{OPT}$ la solución entera óptima y $c_{LP}$ el valor óptimo de la relajación lineal. La diferencia en el valor de la relajación para un modelo y una instancia en particular se computa como $(c_{OPT} - c_{LP})/c_{OPT}$. Los valores de las relajaciones se calcularon usando los algoritmos de branch and cut descritos anteriormente con $\Delta = 1$. Para analizar la relación entre los modelos usan el promedio de esta métrica para instancias con $|V| = 20$, en algunos casos solamente considerando los modelos que encontraron una solución para todas las instancias en el límite de tiempo establecido.
 
-\subsection{Relajaciones}
+Notaron que las diferencias con las relajaciones de la mayoría de los modelos se reducen significativamente al agregar las restricciones que eliminan ciclos ($^{+}$). Mientras que agregar las desigualdades que se basan en las representaciones de grafos ($^{++}$) solamente produce beneficios marginales en la mayoría de los casos. También mostraron que estas diferencias aumentan a medida que disminuye el valor de $\gamma$, es decir, cuando las condiciones de distancia son más restrictivas. Además, en el trabajo original mostraron que todas las relaciones teóricas parecen valer en la práctica.
 
 \subsection{Análisis de los resultados}
 
