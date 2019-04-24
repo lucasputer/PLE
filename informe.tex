@@ -653,19 +653,33 @@ Notaron que las diferencias con las relajaciones de la mayoría de los modelos s
 
 
 \subsection{Análisis de los resultados}
-En el trabajo se identificaron los algoritmos más prometedores para reducir el número de variantes antes de analizarlas en más detalle. Se puede ver en más detalle los resultados en las tablas que se encuentran en el trabajo estudiado.
-Se observó que las instancias de GRL2 con todos los vértices negros en el centro del cuadrado fueron más dificiles de resolver que  GRL1 para todos los algoritmos.
-Se puede ver en las comparaciones como el aumento en las cotas de PL de DDPS y 2DD pierde sentido si tenemos en cuenta el tiempo adicional requerido para resolver los modelos significativamente más grandes.
-También se observó que PDDD y 3PD, que satisfacen implícitamente las restricciones de salto y distancia performan razonablemente bien. Además, las variantes que tienen desigualdades de dos ciclos son un poco mejores que las que consideran los cortes en grafos en capas.
 
+En el trabajo se identificaron los algoritmos más prometedores para reducir el número de variantes antes de analizarlas en más detalle. Se pueden ver en más detalle los resultados en las tablas que se encuentran en el trabajo estudiado.
+
+Se observó que las instancias de GRL2, con todos los vértices negros en el centro del cuadrado, fueron más difíciles de resolver que las de GRL1 para todos los algoritmos.
+
+Se puede ver en las comparaciones como el aumento en las cotas de PL de DDPS y 2DD pierde sentido si tenemos en cuenta el tiempo adicional requerido para resolver los modelos significativamente más grandes. También se observó que PDDD y 3PD, que satisfacen implícitamente las restricciones de salto y distancia, funcionan razonablemente bien. Además, las variantes que tienen desigualdades de dos ciclos son un poco mejores que las que consideran los cortes en grafos en capas.
+
+Teniendo en cuenta estas observaciones, se seleccionaron PS$^{+}$, PD$^{+}$, DD$^{+}$, PDDD$^{+}$ y 3PD$^{+}$ como los modelos mas prometedores.
+
+Sean $c_{LB}$ y $c_{UB}$ las mejores cotas globales inferiores y superiores, respectivamente, obtenidas por un algoritmo dentro de los límites de tiempo y memoria. Para comparar modelos se evalúan sus diferencias de optimalidad, calculadas como $(c_{UB} - c_{LB})/c_{UB}$.
+
+Con respecto a los resultados de GLR1, PD$^{+}$ supera a los otros modelos en gran parte de los casos y es el ganador general. Por otra parte, 3PD$^{+}$ podría recomendarse cuando las restricciones de salto y de distancia son estrictas, mientras que DD$^{+}$ se puede recomendar para las que tienen restricciones estrictas de distancia pero condiciones relativamente débiles de salto.
+
+Observaciones similares se pueden hacer con respecto a los resultados de GLR2. Estos resultados también confirman que las intancias con nodos negros en el centro son significativamente más difíciles de resolver, por lo que el tiempo de CPU promedio y las diferencias de optimalidad son mayores en este caso. Para estas instancias PDDD$^{+}$ parece ser una buena opción, aunque no haya superado a ningún modelo en ninguna instancia en particular, parece proveer un buen compromiso.
+
+En el caso de MUT, los modelos enormes no permiten una aplicación exitosa de formulaciones dependientes de la distancia. Para algunas de sus instancias la infactibilidad pudo mostrarse rápido en el proceso. Es por esto que el modelo simple PS$^{+}$ supera al resto.
+
+En conclusión, PS$^{+}$ debería elegirse para instancias con restricciones sueltas como MUT. PDDD$^{+}$ y 3PD$^{+}$ puede recomendarse cuando las restricciones son estrictas. DD$^{+}$ supera a las otras variantes solamente cuando las restricciones de salto son débiles y las de distancia fuertes. Todos los modelos están especializados para funcionar bien con un tipo especial de instancias, por lo que se podrían obtener soluciones prometedoras si se aplica el modelo indicado en cada situación.
 
 \subsection{Conclusión}
+
 En el trabajo estudiado, se observaron distintos modelos de PLE y algoritmos de branch-and-cut para resolver BWTSP.
 Las formulaciones que se vieron se basan en una estrategia que esta entre medio de dos estrategias propuestas en la literatura.
 Se propusieron, siguiendo la estrategia, varias formulaciones dependientes de la posición y la distancia junto con sus representaciones de grafos en capas.
 Los resultados que arroja el trabajo estudiado, muestran que los modelos propuestos funcionan en instancias particulares y en instancias con diferentes características.
-Los modelos utilizados, si se aplican correctamente, pueden atacar la mayoria de las instancias vistas.
-Los resultados que obtuvieron, confirman que al modelar ideas teoricamente fuertes pero con furmulaciones muy grandes como el modelo PDDD y 3PD sirven para instancias acotadas ajustadamente al ser comparados con las formulaciones standard.
+Los modelos utilizados, si se aplican correctamente, pueden atacar la mayoría de las instancias vistas.
+Los resultados que obtuvieron, confirman que al modelar ideas teóricamente fuertes pero con formulaciones muy grandes como el modelo PDDD y 3PD sirven para instancias acotadas ajustadamente al ser comparados con las formulaciones estándar.
 También se puede ver en los resultados la necesidad de entender más profundamente como separar las desigualdades de grafos en capas sin que aumente el tamaño del modelo de forma significativa.
 
 Desde nuestra perspectiva de estudiantes, realizar este trabajo práctico nos ayudó para afianzar los contenidos vistos en la materia. El hecho de tener que poder explicar un trabajo en términos más simples,
