@@ -185,7 +185,7 @@ Esto representa el conjunto de aristas de costo mínimo. Por supuesto que esto n
 \subsubsection{Relajaciones lineales}
 Como fue mencionado previamente, $BWTSP$ pertenece a NP-Hard, por lo que no es posible atacarlo directamente, es por esto que se utilizan en la práctica, distintos métodos que hacen uso de \textit{relajaciones lineales}.
 
-La técnica de relajación linear en un problema de programación lineal entera consiste en ignorar temporalmente la restricción de tener variables enteras. Por ejemplo, en programa entero 0-1, las restricciones tienen la pinta:
+La técnica de relajación lineal en un problema de programación lineal entera consiste en ignorar temporalmente la restricción de tener variables enteras. Por ejemplo, en programa entero 0-1, las restricciones tienen la pinta:
 $$x_i \in \{0,1\}$$
 Mientras que la relajación lineal del problema usa las siguientes restricciones:
 $$0 \leq x_i \leq 1$$
@@ -340,7 +340,7 @@ Para cada arista $(i,j) \in A$ la variable $X^p_{ij}$ es uno si y solo si esa ar
 \end{align}
 
 Primero veamos que podemos remover las restricciones de salto \ref{eq:4} ya que estas están implícitamente garantizadas por el rango de valores que puede tomar $p$.
-Las restricciones (\ref{eq:14}-\ref{eq:16} nos hablan del balance del flujo de aristas en el espacio de las variables con indices por posición.
+Las restricciones \ref{eq:14}-\ref{eq:16} nos hablan del balance del flujo de aristas en el espacio de las variables con indices por posición.
 \begin{itemize}
   \item \ref{eq:14} indica que una arista sale de cada vértice negro en la posición uno.
   \item \ref{eq:15} dice que llega a cada vértice negro exactamente una arista que pertenece a un segmento de longitud a lo sumo $Q+1$.
